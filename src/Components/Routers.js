@@ -3,7 +3,7 @@ import AuthContainer from './Authentication/AuthContainer'
 
 const Routers = (props) => {
     return (
-        <main>
+        <main className='container'>
             <AuthContainer />
         </main>
     )
