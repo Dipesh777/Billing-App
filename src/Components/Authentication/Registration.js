@@ -1,12 +1,20 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { demo } from '../../Actions/authActions'
 
 const Registration = (props) => {
+    const dispatch = useDispatch()
     const [business, setBusiness] = useState('')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
     const [address, setAddress] = useState('')
+
+    const users = useSelector((state) => {
+        return state.users
+    })
+    console.log(users)
 
     // Form Input handler
     const handleFormInput = (event) => {
@@ -34,7 +42,7 @@ const Registration = (props) => {
             businessName: business,
             address: address
         }
-        console.log(formData)
+        dispatch(demo(formData))
     }
 
 
