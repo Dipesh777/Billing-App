@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { demo } from '../../Actions/authActions'
+import { useDispatch } from 'react-redux'
+import { asyncRegister } from '../../Actions/authActions'
 
 const Registration = (props) => {
     const dispatch = useDispatch()
@@ -11,10 +11,7 @@ const Registration = (props) => {
     const [email, setEmail] = useState('')
     const [address, setAddress] = useState('')
 
-    const users = useSelector((state) => {
-        return state.users
-    })
-    console.log(users)
+
 
     // Form Input handler
     const handleFormInput = (event) => {
@@ -42,7 +39,20 @@ const Registration = (props) => {
             businessName: business,
             address: address
         }
-        dispatch(demo(formData))
+        // redirecting to login
+        const redirect = () => {
+            props.history.push('/login')
+        }
+        // reset form 
+        const resetForm = () => {
+            setBusiness('')
+            setName('')
+            setPassword('')
+            setEmail('')
+            setAddress('')
+        }
+        // dispacting action to register new user
+        dispatch(asyncRegister(formData, redirect, resetForm))
     }
 
 
