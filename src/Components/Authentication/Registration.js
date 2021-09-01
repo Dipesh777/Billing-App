@@ -89,6 +89,7 @@ const Registration = (props) => {
 
     return (
         <div className='d-flex justify-content-center'>
+           
             {/* Registration form */}
             <form style={{ width: '500px' }} className='m-4' onSubmit={handleSubmit}>
 
@@ -153,7 +154,7 @@ const Registration = (props) => {
             <div className='m-5 ps-5 text-center' style={{ paddingTop: '250px' }}>
                 <h1 className=''>Already <br /> Have an Accout!</h1>
                 <p>Login By Click On Login Button</p>
-                <button className='btn btn-primary'><Link to='/' className='text-white text-decoration-none'>Login</Link></button>
+                <button className='btn btn-primary'><Link to='/login' className='text-white text-decoration-none'>Login</Link></button>
             </div>
 
         </div>
