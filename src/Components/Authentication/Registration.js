@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { asyncRegister } from '../../Actions/authActions'
 
 const Registration = (props) => {
+    const { redirect } = props
     const dispatch = useDispatch()
     const [business, setBusiness] = useState('')
     const [name, setName] = useState('')
@@ -66,10 +67,10 @@ const Registration = (props) => {
                 businessName: business,
                 address: address
             }
-            // redirecting to login
-            const redirect = () => {
-                props.history.push('/login')
-            }
+            // // redirecting to login
+            // const redirect = () => {
+            //     props.history.push('/login')
+            // }
             // reset form
             const resetForm = () => {
                 setBusiness('')
@@ -89,7 +90,7 @@ const Registration = (props) => {
 
     return (
         <div className='d-flex justify-content-center'>
-           
+
             {/* Registration form */}
             <form style={{ width: '500px' }} className='m-4' onSubmit={handleSubmit}>
 
