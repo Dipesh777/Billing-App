@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import './login.css'
+import { asyncLogin } from '../../Actions/authActions'
 
 
 const Login = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [formError, setFormError] = useState({})
+    const errors = {}
+
+    const dispatch = useDispatch()
 
     // Input Handler
     const inputHandler = (event) => {
@@ -17,9 +23,37 @@ const Login = (props) => {
         }
     }
 
+    // Client side validation errors
+    const validations = () => {
+        if (email.length === 0) {
+            errors.email = 'email is Required'
+        }
+        if (password.length === 0) {
+            errors.password = 'password is Required'
+        }
+    }
+
     // Handling Form submit
     const handleSubmit = (event) => {
         event.preventDefault()
+        validations()
+        if (Object.keys(errors).length === 0) {
+            setFormError({})
+            // form Data
+            const formData = {
+                email: email,
+                password: password
+            }
+            // reset form
+            const reset = () => {
+                setEmail('')
+                setPassword('')
+            }
+
+            dispatch(asyncLogin(formData, reset))
+        } else {
+            setFormError(errors)
+        }
 
     }
 
@@ -44,6 +78,7 @@ const Login = (props) => {
                         placeholder='Enter your email ID'
                         className='form-control my-2'
                     />
+                    {formError.email && <span className='text-danger'>{formError.email}</span>} <br />
                     <label>Password</label>
                     <input
                         type="password"
@@ -53,6 +88,7 @@ const Login = (props) => {
                         placeholder='Enter Your Password'
                         className='form-control my-2'
                     />
+                    {formError.password && <span className='text-danger'>{formError.password}</span>} <br />
 
                     {/* Login button */}
                     <input type="submit" value='Login' className='btn btn-success mt-2 px-4' />

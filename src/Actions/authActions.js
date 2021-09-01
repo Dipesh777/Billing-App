@@ -24,3 +24,22 @@ export const asyncRegister = (formData, redirect, resetForm) => {
 }
 
 // Action for Login User
+
+export const asyncLogin = (formData, resetForm) => {
+    return () => {
+        axios.post('http://dct-billing-app.herokuapp.com/api/users/login', formData)
+            .then((response) => {
+                const result = response.data
+                if (result.errors) {
+                    alert(result.message)
+                } else {
+                    localStorage.setItem('token', result.token)
+                    resetForm()
+                    alert('successfully login')
+                }
+            })
+            .catch((error) => {
+                alert(error.message)
+            })
+    }
+}
