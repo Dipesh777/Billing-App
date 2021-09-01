@@ -70,7 +70,7 @@ const Registration = (props) => {
             const redirect = () => {
                 props.history.push('/login')
             }
-            // reset form 
+            // reset form
             const resetForm = () => {
                 setBusiness('')
                 setName('')
