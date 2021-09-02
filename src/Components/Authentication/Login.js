@@ -6,6 +6,7 @@ import { asyncLogin } from '../../Actions/authActions'
 
 
 const Login = (props) => {
+    const { handleAuth } = props
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [formError, setFormError] = useState({})
@@ -49,8 +50,12 @@ const Login = (props) => {
                 setEmail('')
                 setPassword('')
             }
+            // Redirection to Dashboard
+            const redirect = () => {
+                props.history.push('/dashboard')
+            }
 
-            dispatch(asyncLogin(formData, reset))
+            dispatch(asyncLogin(formData, reset, redirect, handleAuth))
         } else {
             setFormError(errors)
         }

@@ -25,7 +25,7 @@ export const asyncRegister = (formData, redirect, resetForm) => {
 
 // Action for Login User
 
-export const asyncLogin = (formData, resetForm) => {
+export const asyncLogin = (formData, resetForm, redirect, handleAuth) => {
     return () => {
         axios.post('http://dct-billing-app.herokuapp.com/api/users/login', formData)
             .then((response) => {
@@ -36,6 +36,8 @@ export const asyncLogin = (formData, resetForm) => {
                     localStorage.setItem('token', result.token)
                     resetForm()
                     alert('successfully login')
+                    redirect()
+                    handleAuth()
                 }
             })
             .catch((error) => {
