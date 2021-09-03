@@ -31,7 +31,7 @@ export const asyncLogin = (formData, resetForm, redirect, handleAuth) => {
             .then((response) => {
                 const result = response.data
                 if (result.errors) {
-                    alert(result.message)
+                    alert(result.errors)
                 } else {
                     localStorage.setItem('token', result.token)
                     resetForm()
