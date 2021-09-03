@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { startCustomers } from '../../Actions/billingAppActions'
 import { asycAddCustomer } from '../../Actions/billingAppActions'
 import AddCustomers from './utilities/AddCustomers'
-import TableListing from './utilities/TableListing'
+import CustomerTable from './utilities/CustomerTable'
 
 
 const Customer = (props) => {
@@ -14,7 +14,7 @@ const Customer = (props) => {
     const customers = useSelector((state) => {
         return state.customers
     })
-    
+
     useEffect(() => {
         dispatch(startCustomers())
     }, [customers])
@@ -38,7 +38,7 @@ const Customer = (props) => {
                 formToggler ? <AddCustomers toggle={toggle} submitForm={submitForm} /> : (
                     <>
                         <button onClick={toggle} className='btn btn-success'>Add Customer +</button>
-                        <TableListing data={customers} />
+                        <CustomerTable data={customers} />
                     </>
                 )
             }

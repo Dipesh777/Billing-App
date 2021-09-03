@@ -8,7 +8,7 @@ import AddCustomers from './AddCustomers'
 
 
 
-const TableListing = (props) => {
+const CustomerTable = (props) => {
     const dispatch = useDispatch()
     // const element = <FontAwesomeIcon icon={faCoffee} />
     const { data } = props
@@ -81,4 +81,4 @@ const TableListing = (props) => {
     )
 }
 
-export default TableListing
+export default CustomerTable
