@@ -32,7 +32,7 @@ const Customer = (props) => {
     return (
         <div className='m-3'>
             <header>
-                <h3 className='p-2 text-center bg-light border border'>Customers</h3>
+                <h3 className='p-2 text-center bg-light border rounded'>Customers</h3>
             </header>
             {
                 formToggler ? <AddCustomers toggle={toggle} submitForm={submitForm} /> : (
