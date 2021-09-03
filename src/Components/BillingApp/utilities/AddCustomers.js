@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+
 const AddCustomers = (props) => {
     const { toggle, customer, submitForm } = props
     const [name, setName] = useState(customer ? customer.name : '')
@@ -66,7 +67,7 @@ const AddCustomers = (props) => {
 
     return (
         <form onSubmit={handleSubmit} className='m-3 bg-light p-3'>
-            <h2 className='text-success'>Add New Customer</h2>
+            {customer ? <h2 className='text-success'>Edit Customer Detail</h2> : <h2 className='text-success'>Add New Customer</h2>}
             <label>Customer Name</label>
             <input
                 type="text"
