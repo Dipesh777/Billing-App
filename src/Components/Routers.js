@@ -6,6 +6,8 @@ import Dashboard from './BillingApp/Dashboard'
 import Customer from './BillingApp/Customer'
 import Product from './BillingApp/Product'
 import Account from './BillingApp/Account'
+import AddProduct from './BillingApp/utilities/AddProduct'
+
 
 const Routers = (props) => {
 
@@ -26,7 +28,7 @@ const Routers = (props) => {
                     </header>
 
                     <div className='d-flex'>
-                        <nav className='bg-secondary sidebar' style={{ width: '300px' }}>
+                        <nav className='bg-secondary sidebar' style={{ width: '300px', height: '100%' }}>
                             <ul className='navbar-nav'>
                                 <li className='border py-2 text-center fs-5'>
                                     <Link to='/dashboard' className='text-decoration-none text-white'>Dashboard</Link>
@@ -53,8 +55,9 @@ const Routers = (props) => {
                         <section className='w-100'>
                             <Route path='/dashboard' component={Dashboard} />
                             <Route path='/customer' component={Customer} />
-                            <Route path='/product' component={Product} />
+                            <Route path='/product' component={Product} exact={true} />
                             <Route path='/account' component={Account} />
+                            <Route path='/product/addproduct' component={AddProduct} />
                         </section>
                     </div>
                 </>

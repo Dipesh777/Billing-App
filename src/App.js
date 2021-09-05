@@ -17,7 +17,7 @@ const App = (props) => {
   },[])
 
   return (
-    <div>
+    <div style={{height:'100%'}}>
       <Routers handleAuth={handleAuth} isLoggedIn={isLoggedIn} />
     </div>
   )
