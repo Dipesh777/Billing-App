@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { startCustomers } from '../../Actions/billingAppActions'
 import { asycAddCustomer } from '../../Actions/billingAppActions'
 import AddCustomers from './utilities/AddCustomers'
 import CustomerTable from './utilities/CustomerTable'
@@ -14,11 +13,6 @@ const Customer = (props) => {
     const customers = useSelector((state) => {
         return state.customers
     })
-
-    useEffect(() => {
-        dispatch(startCustomers())
-    }, [customers])
-
 
     // Toggler for Adding new Customer
     const toggle = () => {

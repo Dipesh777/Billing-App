@@ -5,6 +5,7 @@ import Login from './Authentication/Login'
 import Dashboard from './BillingApp/Dashboard'
 import Customer from './BillingApp/Customer'
 import Product from './BillingApp/Product'
+import Billing from './BillingApp/Billing'
 import Account from './BillingApp/Account'
 import AddProduct from './BillingApp/utilities/AddProduct'
 
@@ -40,7 +41,7 @@ const Routers = (props) => {
                                     <Link to='/product' className='text-decoration-none text-white'>Products</Link>
                                 </li>
                                 <li className='border py-2 text-center fs-5'>
-                                    <Link to='/dashboard' className='text-decoration-none text-white'>Billing</Link>
+                                    <Link to='/billing' className='text-decoration-none text-white'>Billing</Link>
                                 </li>
                                 <li className='border py-2 text-center fs-5'>
                                     <Link to='/account' className='text-decoration-none text-white'>Account</Link>
@@ -56,6 +57,7 @@ const Routers = (props) => {
                             <Route path='/dashboard' component={Dashboard} />
                             <Route path='/customer' component={Customer} />
                             <Route path='/product' component={Product} exact={true} />
+                            <Route path='/billing' component={Billing} exact={true} />
                             <Route path='/account' component={Account} />
                             <Route path='/product/addproduct' component={AddProduct} />
                         </section>

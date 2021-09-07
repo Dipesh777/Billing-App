@@ -17,9 +17,9 @@ const Product = (props) => {
         return state.product
     })
 
-    useEffect(() => {
-        dispatch(asyncProduct())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(asyncProduct())
+    // }, [])
 
     // Handleing Edit functionlity
     const productHolder = (data) => {

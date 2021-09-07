@@ -2,10 +2,6 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { startDeleteCustomer, asyncEditCustomer } from '../../../Actions/billingAppActions'
 import AddCustomers from './AddCustomers'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faCoffee } from '@fortawesome/free-solid-svg-icons'
-// import {angry} from '@fortawesome/fontawesome-free'
-
 
 
 const CustomerTable = (props) => {

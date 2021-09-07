@@ -1,5 +1,5 @@
 
-import { ALL_CUSTOMER, ADD_CUSTOMER, DELETE_CUSTOMER } from '../Actions/billingAppActions'
+import { ALL_CUSTOMER, ADD_CUSTOMER, DELETE_CUSTOMER, EDIT_CUSTOMER } from '../Actions/billingAppActions'
 const initialValue = []
 
 const customerReducer = (state = initialValue, action) => {
@@ -9,6 +9,15 @@ const customerReducer = (state = initialValue, action) => {
         }
         case ADD_CUSTOMER: {
             return [...state, action.payload]
+        }
+        case EDIT_CUSTOMER: {
+            return state.map(ele => {
+                if (ele._id === action.payload._id) {
+                    return { ...action.payload }
+                } else {
+                    return ele
+                }
+            })
         }
         case DELETE_CUSTOMER: {
             return state.filter((ele) => {
