@@ -22,9 +22,8 @@ const App = (props) => {
       dispatch(startCustomers())
       dispatch(asyncProduct())
       dispatch(startAllBills())
-
     }
-  }, [])
+  },[])
 
   return (
     <div style={{ height: '100%' }}>

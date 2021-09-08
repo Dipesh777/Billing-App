@@ -57,3 +57,43 @@ export const asyncNewBill = (formData, toggle, reset) => {
             })
     }
 }
+
+// Action for deleting bills 
+export const DELETE_BILL = 'DELETE_BILL'
+const deleteBill = (data) => {
+    return {
+        type: DELETE_BILL,
+        payload: data
+    }
+}
+export const asyncDeleteBill = (id) => {
+    return (dispatch) => {
+        axios.delete(`http://dct-billing-app.herokuapp.com/api/bills/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then((response) => {
+                const result = response.data
+                dispatch(deleteBill(result))
+            })
+            .catch((error) => {
+                alert(error.message)
+            })
+    }
+}
+
+// Action for view Bills using bill id
+export const asyncViewBill = (id, setViewBill) => {
+    return () => {
+        axios.get(`http://dct-billing-app.herokuapp.com/api/bills/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then((response) => {
+                const result = response.data
+                setViewBill(result)
+            })
+    }
+}
