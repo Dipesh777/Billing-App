@@ -6,15 +6,16 @@ import AddBill from './utilities/AddBill'
 const Billing = (props) => {
     const [switcher, setSwitcher] = useState(false)
 
-    // customers
     const customers = useSelector((state) => {
         return state.customers
     })
+    console.log('Customers', customers)
 
     // All Bills List 
     const bills = useSelector((state) => {
         return state.bills
     })
+
 
     const toggle = () => {
         setSwitcher(!switcher)
@@ -28,11 +29,9 @@ const Billing = (props) => {
             </header>
             {switcher ? <AddBill toggle={toggle} /> : (
                 <>
+                    <button className='btn btn-success' onClick={toggle}>Generate Bill</button>
                     {bills.length === 0 ? <h2>No Bills Available</h2> : (
-                        <>
-                            <button className='btn btn-success' onClick={toggle}>Generate Bill</button>
-                            <BillList customers={customers} bills={bills} />
-                        </>
+                        <BillList customers={customers} bills={bills} />
                     )}
                 </>
             )}
