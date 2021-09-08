@@ -1,4 +1,5 @@
 import React from 'react'
+import { BsTrashFill, BsPencilSquare } from 'react-icons/bs'
 
 
 const ProductTable = (props) => {
@@ -11,9 +12,9 @@ const ProductTable = (props) => {
     }
 
     return (
-        <div className='my-3'>
+        <div>
             <h2 className='fw-normal'>Listing Products - <span className='text-success'>{products.length}</span> </h2>
-            <table className='table'>
+            <table className='table bg-light  my-4'>
                 <thead>
                     <tr>
                         <th>Sr-No</th>
@@ -24,13 +25,13 @@ const ProductTable = (props) => {
                 </thead>
                 <tbody>
                     {products.map((ele, ind) => {
-                        return <tr key={ele._id}>
+                        return <tr key={ele._id} className='align-middle'>
                             <td>{ind + 1}</td>
                             <td>{ele.name}</td>
                             <td>{ele.price}</td>
-                            <td>
-                                <button className='btn btn-warning me-2 px-3' onClick={() => handleEdit(ele)}>Edit</button>
-                                <button className='btn btn-danger' onClick={() => DeleteItem(ele._id)}>Delete</button>
+                            <td className='d-flex justify-content-around'>
+                                <button className='btn btn-warning' onClick={() => handleEdit(ele)}><BsPencilSquare /></button>
+                                <button className='btn btn-danger' onClick={() => DeleteItem(ele._id)}><BsTrashFill /></button>
                             </td>
 
                         </tr>

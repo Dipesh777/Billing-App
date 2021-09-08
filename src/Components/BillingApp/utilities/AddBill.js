@@ -123,6 +123,7 @@ const AddBill = (props) => {
                     <label className='fs-3'>Quantity</label>
                     <input type="number" name="quantity" value={quantity} onChange={handleForm} className='form-control' placeholder='1' />
                     <button onClick={addCart} className='btn btn-info m-2'>Add Cart</button>
+                    <button onClick={toggle} className='btn btn-secondary m-2'>Cancel</button>
                 </div>
 
                 {/* Cart */}
