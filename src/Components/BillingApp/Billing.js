@@ -12,7 +12,6 @@ const Billing = (props) => {
     const customers = useSelector((state) => {
         return state.customers
     })
-    console.log('Customers', customers)
 
     // All Bills List 
     const bills = useSelector((state) => {

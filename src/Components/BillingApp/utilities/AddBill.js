@@ -6,6 +6,7 @@ import Datepicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { asyncProduct } from '../../../Actions/productActions'
 import { asyncNewBill } from '../../../Actions/billingAction'
+import ViewBill from './ViewBill'
 
 const AddBill = (props) => {
     const { toggle } = props
@@ -18,6 +19,10 @@ const AddBill = (props) => {
     const [showCart, setShowCart] = useState([])
     const [formError, setFormError] = useState({})
     const error = {}
+
+    // Modal State Variables
+    const [showModal, setShowModal] = useState(false)
+    const [viewBill, setViewBill] = useState({})
 
     useEffect(() => {
         dispatch(asyncProduct())
@@ -36,16 +41,14 @@ const AddBill = (props) => {
     // Handling form input 
     const handleForm = (event) => {
         const field = event.target.name
-        // if (field === 'customer') {
-        //     setCustomerSelect(event.target.value)
-        // } else 
         if (field === 'product') {
             setProductSelect(event.target.value)
         } else if (field === 'quantity') {
             setQuantity(event.target.value)
         }
     }
-
+    
+    // Handling react select for customer
     const handleCustomer = (customerSelect) => {
         setCustomerSelect(customerSelect)
     }
@@ -151,7 +154,7 @@ const AddBill = (props) => {
                 setQuantity('')
                 setCart([])
             }
-            dispatch(asyncNewBill(formData, toggle, reset))
+            dispatch(asyncNewBill(formData, reset, setViewBill, setShowModal))
 
         } else {
             setFormError(error)
@@ -203,7 +206,7 @@ const AddBill = (props) => {
                 {/* Cart */}
                 <div className='ms-5'>
                     <h3 style={{ width: '300px' }} className='p-5'>Cart Item - {showCart.length}</h3>
-                    {showCart.length === 0 ? <h3 className='text-info border text-center' style={{ paddingTop: '100px',paddingBottom:'100px' }}>Cart Is Empty</h3> : (
+                    {showCart.length === 0 ? <h3 className='text-info border text-center' style={{ paddingTop: '100px', paddingBottom: '100px' }}>Cart Is Empty</h3> : (
                         <table className='table text-center align-middle' style={{ width: '200px' }}>
                             <thead>
                                 <tr>
@@ -248,6 +251,10 @@ const AddBill = (props) => {
                     <input type="submit" value='Generate Bill' className='btn btn-success mt-5' />
                 </div>
             </form>
+
+
+            {/* After Successfull Generation Show modal */}
+            <ViewBill show={showModal} hide={() => setShowModal(false)} viewBill={viewBill} toggle={toggle}/>
         </>
 
     )

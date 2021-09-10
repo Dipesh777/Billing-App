@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { BsEyeFill, BsTrash } from 'react-icons/bs'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { asyncDeleteBill, asyncViewBill } from '../../../Actions/billingAction'
 import ViewBill from './ViewBill'
 
@@ -9,19 +9,11 @@ const BillList = (props) => {
     const { customers, bills } = props
     const [showModal, setShowModal] = useState(false)
     const [viewBill, setViewBill] = useState({})
-    console.log('bill', viewBill)
-
-    // All Products
-    const products = useSelector((state) => {
-        return state.product
-    })
-    console.log('products', products)
 
     // handle viewBill
     const billView = (id) => {
         dispatch(asyncViewBill(id, setViewBill))
         setShowModal(true)
-        // modalbills()
     }
 
     // Listing name

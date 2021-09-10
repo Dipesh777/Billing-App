@@ -4,7 +4,7 @@ import html2pdf from 'html2pdf.js'
 import { Modal, Button } from 'react-bootstrap'
 
 const ViewBill = (props) => {
-    const { show, hide, viewBill } = props
+    const { show, hide, viewBill, toggle } = props
 
     // Store data
     const product = useSelector((state) => {
@@ -13,6 +13,16 @@ const ViewBill = (props) => {
     const customer = useSelector((state) => {
         return state.customers
     })
+
+    // Handling Modal Close
+    const closeModal = () => {
+        hide()
+        if (typeof toggle === 'function') {
+            toggle()
+        }
+    }
+
+    // Handling Pdf bill download
     const download = () => {
         const opt = {
             margin: 1,
@@ -40,21 +50,21 @@ const ViewBill = (props) => {
                     <h3>Invoice bill</h3>
                     <p className='fs-6 m-0 text-muted'>Date -
                         {Object.keys(viewBill).length !== 0 && viewBill.date.slice(0, 10).split('-').reverse().join('/')}</p>
-                    {customer.map((ele) => {
-                        return viewBill.customer === ele._id && <span className='fs-5'>Name - {ele.name}</span>
+                    {customer.map((ele, ind) => {
+                        return viewBill.customer === ele._id && <span className='fs-5' key={ind + 1}>Name - {ele.name}</span>
                     })}
                     <br />
-                    {customer.map((ele) => {
-                        return viewBill.customer === ele._id && <span className='fs-6 m-0 p-0'>Contact - {ele.mobile}</span>
+                    {customer.map((ele, ind) => {
+                        return viewBill.customer === ele._id && <span className='fs-6 m-0 p-0' key={ind + 2}>Contact - {ele.mobile}</span>
                     })} <br />
-                    {customer.map((ele) => {
-                        return viewBill.customer === ele._id && <span className='fs-6 m-0 p-0'>email - {ele.email}</span>
+                    {customer.map((ele, ind) => {
+                        return viewBill.customer === ele._id && <span className='fs-6 m-0 p-0' key={ind + 3}>email - {ele.email}</span>
                     })}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <table className='table'>
-                    <thead >
+                    <thead>
                         <tr>
                             <th>Sr-No.</th>
                             <th>Poduct</th>
@@ -76,7 +86,7 @@ const ViewBill = (props) => {
                                 <td>{ele.subTotal}</td>
                             </tr>
                         })}
-                        <tr key={viewBill._id}>
+                        <tr>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -87,7 +97,7 @@ const ViewBill = (props) => {
                 </table>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={hide}>Close</Button>
+                <Button onClick={closeModal}>Close</Button>
                 <Button onClick={download}>Download</Button>
             </Modal.Footer>
         </Modal>

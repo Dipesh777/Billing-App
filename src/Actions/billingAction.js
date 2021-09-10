@@ -34,7 +34,7 @@ const newBill = (data) => {
         payload: data
     }
 }
-export const asyncNewBill = (formData, toggle, reset) => {
+export const asyncNewBill = (formData, reset, setViewBill, setShowModal) => {
     return (dispatch) => {
 
         // Start Async call for generating bill
@@ -49,9 +49,10 @@ export const asyncNewBill = (formData, toggle, reset) => {
                     alert(result.message)
                 } else {
                     dispatch(newBill(result))
+                    setViewBill(result)
                     swal("Successfully", "Bill Generated", "success");
                     reset()
-                    toggle()
+                    setShowModal(true)
                 }
             })
             .catch((error) => {
