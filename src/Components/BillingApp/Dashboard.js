@@ -1,9 +1,16 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { startCustomers } from '../../Actions/billingAppActions'
+import { asyncProduct } from '../../Actions/productActions'
+import { startAllBills } from '../../Actions/billingAction'
 
 const Dashboard = (props) => {
-
-
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(startCustomers())
+        dispatch(asyncProduct())
+        dispatch(startAllBills())
+    })
     console.log('I am Dashboard')
     return (
         <main>
