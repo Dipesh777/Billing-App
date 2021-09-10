@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import html2pdf from 'html2pdf.js'
 import { Modal, Button } from 'react-bootstrap'
 
 const ViewBill = (props) => {
     const { show, hide, viewBill } = props
-    const [elementId, setElementId] = useState('')
 
     // Store data
     const product = useSelector((state) => {
