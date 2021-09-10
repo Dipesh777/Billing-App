@@ -21,7 +21,7 @@ const BillList = (props) => {
     const billView = (id) => {
         dispatch(asyncViewBill(id, setViewBill))
         setShowModal(true)
-        // modalData()
+        // modalbills()
     }
 
     // Listing name
