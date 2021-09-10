@@ -162,9 +162,9 @@ const AddBill = (props) => {
     return (
         <>
             <h2 className='text-success'>Generate New Bill</h2>
-            <form onSubmit={handleSubmit} className='d-flex m-5'>
+            <form onSubmit={handleSubmit} className='d-flex m-1'>
                 {/* select customer */}
-                <div className='mx-3 p-5'>
+                <div className='mx-3 p-2'>
 
                     <label className='my-2 fs-5'>Date</label>
                     <Datepicker selected={date} onChange={date => setDate(date)} className='form-control' />
