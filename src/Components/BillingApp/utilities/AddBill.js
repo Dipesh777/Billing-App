@@ -109,7 +109,6 @@ const AddBill = (props) => {
             price: cartProduct.price,
             total: quantity * cartProduct.price
         }
-        console.log('typeoffff', typeof showData.total)
         setShowCart([...showCart, showData])
     }
     // All Product Total Price
