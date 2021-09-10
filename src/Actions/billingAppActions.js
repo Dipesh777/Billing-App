@@ -1,4 +1,5 @@
 import axios from 'axios'
+import swal from 'sweetalert'
 
 // Action Of getting LoggedIn user Account
 export const USER = 'USER'
@@ -72,6 +73,7 @@ export const asycAddCustomer = (formData, toggle, reset) => {
                 } else {
                     dispatch(addCustomer(result))
                     reset()
+                    swal("Success", "New Customer Added Successfully", "success");
                     toggle()
                 }
 
@@ -92,26 +94,42 @@ const editCustomer = (data) => {
 }
 export const asyncEditCustomer = (formData, toggle, reset, id) => {
     return (dispatch) => {
-        axios.put(`http://dct-billing-app.herokuapp.com/api/customers/${id}`, formData, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
+        swal({
+            title: "Are you sure?",
+            text: "Changes will be Saved to Customer Details",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
         })
-            .then((response) => {
-                const result = response.data
-                if (result.errors) {
-                    alert(result.message)
-                } else {
-                    dispatch(editCustomer(result))
-                    reset()
-                    toggle()
-                }
-            })
-            .catch((error) => {
-                alert(error.message)
-            })
-    }
+            .then((willSave) => {
+                if (willSave) {
+                    //Start Asyc call if willSave is true
+                    axios.put(`http://dct-billing-app.herokuapp.com/api/customers/${id}`, formData, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    })
+                        .then((response) => {
+                            const result = response.data
+                            if (result.errors) {
+                                alert(result.message)
+                            } else {
+                                dispatch(editCustomer(result))
+                                reset()
+                                toggle()
+                            }
+                        })
+                        .catch((error) => {
+                            alert(error.message)
+                        })
+                    //End Asyc call if willSave is true
 
+                    swal("Changes Saved Successfully", {
+                        icon: "success",
+                    });
+                }
+            });
+    }
 }
 
 // Action for Deleting customers
@@ -124,17 +142,35 @@ const deleteCustomer = (_id) => {
 }
 export const startDeleteCustomer = (id) => {
     return (dispatch) => {
-        axios.delete(`http://dct-billing-app.herokuapp.com/api/customers/${id}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
+        swal({
+            title: "Are you sure?",
+            text: "All Bills Will be Deleted of Customer",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
         })
-            .then((response) => {
-                const result = response.data
-                dispatch(deleteCustomer(result._id))
-            })
-            .catch((error) => {
-                alert(error.message)
-            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    // Start Async Call
+                    axios.delete(`http://dct-billing-app.herokuapp.com/api/customers/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    })
+                        .then((response) => {
+                            const result = response.data
+                            dispatch(deleteCustomer(result._id))
+                        })
+                        .catch((error) => {
+                            alert(error.message)
+                        })
+                    // End Async Call
+
+                    swal("Customer has been deleted!", {
+                        icon: "success",
+                    });
+                }
+            });
+
     }
 }

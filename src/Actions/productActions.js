@@ -1,4 +1,5 @@
 import axios from 'axios'
+import swal from 'sweetalert'
 
 
 // Action for Fetching all product of user
@@ -46,6 +47,7 @@ export const startProduct = (formData, reset, redirect) => {
                 const result = response.data
                 dispatch(addProduct(result))
                 reset()
+                swal("Success", "New Product Added Successfully", "success");
                 redirect()
             })
             .catch((error) => {
@@ -64,20 +66,38 @@ const editProduct = (data) => {
 }
 export const startEditProduct = (formData, toggle, reset, id) => {
     return (dispatch) => {
-        axios.put(`http://dct-billing-app.herokuapp.com/api/products/${id}`, formData, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
+        swal({
+            title: "Are you sure?",
+            text: "You Want to save Changes to product",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
         })
-            .then((response) => {
-                const result = response.data
-                dispatch(editProduct(result))
-                reset()
-                toggle()
-            })
-            .catch((error) => {
-                alert(error.message)
-            })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    // Start Asyn call for edit Product Info
+                    axios.put(`http://dct-billing-app.herokuapp.com/api/products/${id}`, formData, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    })
+                        .then((response) => {
+                            const result = response.data
+                            dispatch(editProduct(result))
+                            reset()
+                            toggle()
+                        })
+                        .catch((error) => {
+                            alert(error.message)
+                        })
+                    // End Asyn call for edit Product Info
+
+                    swal("Changes Saved Successfully", {
+                        icon: "success",
+                    });
+                }
+            });
     }
 }
 
@@ -91,17 +111,35 @@ const deleteProduct = (data) => {
 }
 export const asyncDeleteProduct = (id) => {
     return (dispatch) => {
-        axios.delete(`http://dct-billing-app.herokuapp.com/api/products/${id}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
+        swal({
+            title: "Are you sure?",
+            text: "All Bills Will be Deleted of Products",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
         })
-            .then((response) => {
-                const result = response.data
-                dispatch(deleteProduct(result._id))
-            })
-            .catch((error) => {
-                alert(error.message)
-            })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    // Start Async Deleting product
+                    axios.delete(`http://dct-billing-app.herokuapp.com/api/products/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    })
+                        .then((response) => {
+                            const result = response.data
+                            dispatch(deleteProduct(result._id))
+                        })
+                        .catch((error) => {
+                            alert(error.message)
+                        })
+                    // End Async Deleting product
+                    
+                    swal("Product Deleted Successfully", {
+                        icon: "success",
+                    });
+                }
+            });
     }
 }

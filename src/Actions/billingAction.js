@@ -1,4 +1,5 @@
 import axios from 'axios'
+import swal from 'sweetalert'
 
 // Action for fetching All bills
 export const ALL_BILLS = 'ALL_BILLS'
@@ -33,8 +34,10 @@ const newBill = (data) => {
         payload: data
     }
 }
-export const asyncNewBill = (formData, toggle, reset) => {
+export const asyncNewBill = (formData, reset, setViewBill, setShowModal) => {
     return (dispatch) => {
+
+        // Start Async call for generating bill
         axios.post('http://dct-billing-app.herokuapp.com/api/bills', formData, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -46,14 +49,71 @@ export const asyncNewBill = (formData, toggle, reset) => {
                     alert(result.message)
                 } else {
                     dispatch(newBill(result))
-                    alert('successFull')
+                    setViewBill(result)
+                    swal("Successfully", "Bill Generated", "success");
                     reset()
-                    toggle()
+                    setShowModal(true)
                 }
             })
             .catch((error) => {
                 alert('Unsuccessful')
                 alert(error.message)
+            })
+    }
+}
+
+// Action for deleting bills 
+export const DELETE_BILL = 'DELETE_BILL'
+const deleteBill = (data) => {
+    return {
+        type: DELETE_BILL,
+        payload: data
+    }
+}
+export const asyncDeleteBill = (id) => {
+    return (dispatch) => {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this Bill",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    // Start Async Delete bill operation
+                    axios.delete(`http://dct-billing-app.herokuapp.com/api/bills/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    })
+                        .then((response) => {
+                            const result = response.data
+                            dispatch(deleteBill(result))
+                        })
+                        .catch((error) => {
+                            alert(error.message)
+                        })
+                    // End Async Delete bill operation
+                    swal("Bill has been deleted!", {
+                        icon: "success",
+                    });
+                }
+            });
+    }
+}
+
+// Action for view Bills using bill id
+export const asyncViewBill = (id, setViewBill) => {
+    return () => {
+        axios.get(`http://dct-billing-app.herokuapp.com/api/bills/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then((response) => {
+                const result = response.data
+                setViewBill(result)
             })
     }
 }

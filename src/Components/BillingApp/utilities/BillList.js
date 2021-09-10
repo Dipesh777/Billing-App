@@ -1,43 +1,66 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { BsEyeFill, BsTrash } from 'react-icons/bs'
+import { useDispatch } from 'react-redux'
+import { asyncDeleteBill, asyncViewBill } from '../../../Actions/billingAction'
+import ViewBill from './ViewBill'
 
 const BillList = (props) => {
+    const dispatch = useDispatch()
     const { customers, bills } = props
-   
-    console.log('Customers', customers)
-    console.log('Bills', bills)
+    const [showModal, setShowModal] = useState(false)
+    const [viewBill, setViewBill] = useState({})
 
+    // handle viewBill
+    const billView = (id) => {
+        dispatch(asyncViewBill(id, setViewBill))
+        setShowModal(true)
+    }
+
+    // Listing name
     const customerName = (id) => {
         const result = customers.find((ele) => {
             return ele._id === id
         })
-        return result.name
+        return result ? result.name : 'Customer Deleted'
+    }
+
+
+    // handle Delete
+    const handleDelete = (id) => {
+        dispatch(asyncDeleteBill(id))
     }
 
 
     return (
-        <table className='table'>
-            <thead>
-                <tr>
-                    <th>Sr-No</th>
-                    <th>Customer</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {bills.map((ele, ind) => {
-                    return (
-                        <tr key={ele._id}>
-                            <td>{ind + 1}</td>
-                            <td>{customerName(ele.customer)}</td>
-                            <td>
-                                <button>View Bill</button>
-                                <button>Delete</button>
-                            </td>
-                        </tr>
-                    )
-                })}
-            </tbody>
-        </table>
+        <>
+            <table className='table'>
+                <thead>
+                    <tr>
+                        <th>Sr-No</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {bills.map((ele, ind) => {
+                        return (
+                            <tr key={ele._id} className='align-middle'>
+                                <td>{ind + 1}</td>
+                                <td>{customerName(ele.customer)}</td>
+                                <td>{ele.date.slice(0, 10).split('-').reverse().join('-')}</td>
+                                <td>
+                                    <button className='btn btn-info mx-2' onClick={() => billView(ele._id)}><BsEyeFill /></button>
+                                    <button className='btn btn-danger' onClick={() => handleDelete(ele._id)}><BsTrash /></button>
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+
+            <ViewBill show={showModal} hide={() => setShowModal(false)} viewBill={viewBill} />
+        </>
     )
 }
 

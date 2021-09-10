@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { BsTrashFill, BsPencilSquare } from 'react-icons/bs'
 import { startDeleteCustomer, asyncEditCustomer } from '../../../Actions/billingAppActions'
 import AddCustomers from './AddCustomers'
 
@@ -32,6 +33,7 @@ const CustomerTable = (props) => {
 
     return (
         <>
+            <h2>Listing Customers - <span className='text-success'>{data.length}</span> </h2>
             {editForm ? (
                 <AddCustomers toggle={toggle} customer={customer} submitForm={submitForm} />
             ) : (
@@ -56,14 +58,14 @@ const CustomerTable = (props) => {
                         <tbody>
                             {
                                 data.map((ele, ind) => {
-                                    return <tr key={ele._id}>
+                                    return <tr key={ele._id} className='align-middle'>
                                         <td>{ind + 1}</td>
                                         <td>{ele.name}</td>
                                         <td>{ele.mobile}</td>
                                         <td>{ele.email}</td>
-                                        <td>
-                                            <button className='fa fa-camera' onClick={() => handleEdit(ele)}>Edit</button>
-                                            <button onClick={() => handleDelete(ele._id)}>Delete</button>
+                                        <td className='d-flex justify-content-around'>
+                                            <button className='btn btn-warning py-1' onClick={() => handleEdit(ele)}><BsPencilSquare /></button>
+                                            <button onClick={() => handleDelete(ele._id)} className='btn btn-danger'><BsTrashFill /></button>
                                         </td>
                                     </tr>
                                 })
