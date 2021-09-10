@@ -1,4 +1,5 @@
 import axios from 'axios'
+import swal from 'sweetalert'
 
 // Action for fetching All bills
 export const ALL_BILLS = 'ALL_BILLS'
@@ -35,6 +36,8 @@ const newBill = (data) => {
 }
 export const asyncNewBill = (formData, toggle, reset) => {
     return (dispatch) => {
+
+        // Start Async call for generating bill
         axios.post('http://dct-billing-app.herokuapp.com/api/bills', formData, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -46,7 +49,7 @@ export const asyncNewBill = (formData, toggle, reset) => {
                     alert(result.message)
                 } else {
                     dispatch(newBill(result))
-                    alert('successFull')
+                    swal("Successfully","Bill Generated", "success");
                     reset()
                     toggle()
                 }
