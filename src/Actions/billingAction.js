@@ -49,7 +49,7 @@ export const asyncNewBill = (formData, toggle, reset) => {
                     alert(result.message)
                 } else {
                     dispatch(newBill(result))
-                    swal("Successfully","Bill Generated", "success");
+                    swal("Successfully", "Bill Generated", "success");
                     reset()
                     toggle()
                 }
@@ -71,18 +71,34 @@ const deleteBill = (data) => {
 }
 export const asyncDeleteBill = (id) => {
     return (dispatch) => {
-        axios.delete(`http://dct-billing-app.herokuapp.com/api/bills/${id}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this Bill",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
         })
-            .then((response) => {
-                const result = response.data
-                dispatch(deleteBill(result))
-            })
-            .catch((error) => {
-                alert(error.message)
-            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    // Start Async Delete bill operation
+                    axios.delete(`http://dct-billing-app.herokuapp.com/api/bills/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    })
+                        .then((response) => {
+                            const result = response.data
+                            dispatch(deleteBill(result))
+                        })
+                        .catch((error) => {
+                            alert(error.message)
+                        })
+                    // End Async Delete bill operation
+                    swal("Bill has been deleted!", {
+                        icon: "success",
+                    });
+                }
+            });
     }
 }
 
