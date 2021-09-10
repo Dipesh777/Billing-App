@@ -17,24 +17,6 @@ const BillList = (props) => {
     })
     console.log('products', products)
 
-    // // Modal View Bill Show Data
-    // const modalData = () => {
-    //     const modalCustomer = customers.find(ele => {
-    //         if (Object.keys(viewBill).length !== 0) {
-    //             return viewBill.customer === ele._id
-    //         }
-    //     })
-    //     if (Object.keys(viewBill).length !== 0) {
-    //         const modalProduct = viewBill.lineItems.map((ele) => {
-    //             products.filter((ele) => {
-    //                 return ele.product === ele._id
-    //             })
-    //         })
-    //     }
-    //     console.log('modalCustomer', modalCustomer)
-    //     console.log('modalProduct', modalCustomer)
-    // }
-
     // handle viewBill
     const billView = (id) => {
         dispatch(asyncViewBill(id, setViewBill))
