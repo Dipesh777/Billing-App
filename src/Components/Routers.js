@@ -7,8 +7,6 @@ import Customer from './BillingApp/Customer'
 import Product from './BillingApp/Product'
 import Billing from './BillingApp/Billing'
 import Account from './BillingApp/Account'
-import AddProduct from './BillingApp/utilities/AddProduct'
-
 
 const Routers = (props) => {
 

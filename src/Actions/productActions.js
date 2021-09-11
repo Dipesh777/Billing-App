@@ -51,7 +51,9 @@ export const startProduct = (formData, reset, toggle) => {
                 toggle()
             })
             .catch((error) => {
-                alert(error.message)
+                swal(error.message, {
+                    icon: 'error'
+                })
             })
     }
 }
@@ -73,8 +75,8 @@ export const startEditProduct = (formData, toggle, reset, id) => {
             buttons: true,
             dangerMode: true,
         })
-            .then((willDelete) => {
-                if (willDelete) {
+            .then((willEdit) => {
+                if (willEdit) {
 
                     // Start Asyn call for edit Product Info
                     axios.put(`http://dct-billing-app.herokuapp.com/api/products/${id}`, formData, {
@@ -86,16 +88,17 @@ export const startEditProduct = (formData, toggle, reset, id) => {
                             const result = response.data
                             dispatch(editProduct(result))
                             reset()
+                            swal("Changes Saved Successfully", {
+                                icon: "success",
+                            });
                             toggle()
                         })
                         .catch((error) => {
-                            alert(error.message)
+                            swal(error.message, {
+                                icon: 'error'
+                            })
                         })
                     // End Asyn call for edit Product Info
-
-                    swal("Changes Saved Successfully", {
-                        icon: "success",
-                    });
                 }
             });
     }
@@ -130,15 +133,16 @@ export const asyncDeleteProduct = (id) => {
                         .then((response) => {
                             const result = response.data
                             dispatch(deleteProduct(result._id))
+                            swal("Product Deleted Successfully", {
+                                icon: "success",
+                            });
                         })
                         .catch((error) => {
-                            alert(error.message)
+                            swal(error.message, {
+                                icon: 'error'
+                            })
                         })
                     // End Async Deleting product
-                    
-                    swal("Product Deleted Successfully", {
-                        icon: "success",
-                    });
                 }
             });
     }
