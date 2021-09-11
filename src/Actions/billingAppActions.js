@@ -1,7 +1,7 @@
 import axios from 'axios'
 import swal from 'sweetalert'
 
-// Action Of getting LoggedIn user Account
+// Action Of getting LoggedIn user Account Details
 export const USER = 'USER'
 const user = (data) => {
     return {
@@ -21,7 +21,9 @@ export const asyncUser = () => {
                 dispatch(user(result))
             })
             .catch((error) => {
-                alert(error.message)
+                swal(error.message, {
+                    icon: "error"
+                })
             })
     }
 }
@@ -79,7 +81,9 @@ export const asycAddCustomer = (formData, toggle, reset) => {
 
             })
             .catch((error) => {
-                alert(error.message)
+                swal(error.message, {
+                    icon: "error"
+                })
             })
     }
 }
@@ -116,17 +120,18 @@ export const asyncEditCustomer = (formData, toggle, reset, id) => {
                             } else {
                                 dispatch(editCustomer(result))
                                 reset()
+                                swal("Changes Saved Successfully", {
+                                    icon: "success",
+                                });
                                 toggle()
                             }
                         })
                         .catch((error) => {
-                            alert(error.message)
+                            swal(error.message, {
+                                icon: "error"
+                            })
                         })
                     //End Asyc call if willSave is true
-
-                    swal("Changes Saved Successfully", {
-                        icon: "success",
-                    });
                 }
             });
     }
@@ -160,15 +165,16 @@ export const startDeleteCustomer = (id) => {
                         .then((response) => {
                             const result = response.data
                             dispatch(deleteCustomer(result._id))
+                            swal("Customer has been deleted!", {
+                                icon: "success",
+                            });
                         })
                         .catch((error) => {
-                            alert(error.message)
+                            swal(error.message, {
+                                icon: "error"
+                            })
                         })
                     // End Async Call
-
-                    swal("Customer has been deleted!", {
-                        icon: "success",
-                    });
                 }
             });
 

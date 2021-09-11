@@ -7,8 +7,6 @@ import Customer from './BillingApp/Customer'
 import Product from './BillingApp/Product'
 import Billing from './BillingApp/Billing'
 import Account from './BillingApp/Account'
-import AddProduct from './BillingApp/utilities/AddProduct'
-
 
 const Routers = (props) => {
 
@@ -59,7 +57,6 @@ const Routers = (props) => {
                             <Route path='/product' component={Product} exact={true} />
                             <Route path='/billing' component={Billing} exact={true} />
                             <Route path='/account' component={Account} />
-                            <Route path='/product/addproduct' component={AddProduct} />
                         </section>
                     </div>
                 </>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { BsEyeFill, BsTrash } from 'react-icons/bs'
+import { BsEyeFill, BsTrash, BsArrowLeft, BsArrowRight } from 'react-icons/bs'
 import { useDispatch } from 'react-redux'
+import ReactPaginate from 'react-paginate'
 import { asyncDeleteBill, asyncViewBill } from '../../../Actions/billingAction'
 import ViewBill from './ViewBill'
 
@@ -9,6 +10,17 @@ const BillList = (props) => {
     const { customers, bills } = props
     const [showModal, setShowModal] = useState(false)
     const [viewBill, setViewBill] = useState({})
+
+    // Handling Pagination
+    const [pageNumber, setPageNumber] = useState(0)
+    const billPerPage = 10
+    const pageVisited = pageNumber * billPerPage
+    const displayBills = bills.slice(pageVisited, pageVisited + billPerPage)
+
+    const pageCount = Math.ceil(bills.length / billPerPage)
+    const pageChange = ({ selected }) => {
+        setPageNumber(selected)
+    }
 
     // handle viewBill
     const billView = (id) => {
@@ -33,6 +45,7 @@ const BillList = (props) => {
 
     return (
         <>
+            <h3>Listing Bills - <span className='text-success'>{displayBills.length}</span></h3>
             <table className='table'>
                 <thead>
                     <tr>
@@ -43,7 +56,7 @@ const BillList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {bills.map((ele, ind) => {
+                    {displayBills.map((ele, ind) => {
                         return (
                             <tr key={ele._id} className='align-middle'>
                                 <td>{ind + 1}</td>
@@ -58,6 +71,19 @@ const BillList = (props) => {
                     })}
                 </tbody>
             </table>
+
+            <ReactPaginate
+                previousLabel={<BsArrowLeft />}
+                nextLabel={<BsArrowRight />}
+                pageCount={pageCount}
+                onPageChange={pageChange}
+                containerClassName='d-flex justify-content-center text-primary text-decoration-none list-unstyled mt-5'
+                previousLinkClassName='text-decoration-none mx-2 border border-success p-2 rounded text-success fs-5'
+                nextLinkClassName='text-decoration-none mx-2 border border-success p-2 rounded text-success fs-5'
+                pageLinkClassName='text-decoration-none mx-2 border border-dark px-3 py-2 rounded'
+                disabledClassName='text-muted'
+                activeClassName='fs-5'
+            />
 
             <ViewBill show={showModal} hide={() => setShowModal(false)} viewBill={viewBill} />
         </>

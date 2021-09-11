@@ -32,7 +32,7 @@ const Customer = (props) => {
         const input = event.target.value
         setSearchCustomer(input)
         const result = customers.filter(ele => {
-            return ele.name.toLowerCase().includes(input) || ele.mobile.includes(input)
+            return ele.name.toLowerCase().includes(input.toLowerCase()) || ele.mobile.includes(input)
         })
         setSearchData(result)
     }
@@ -45,7 +45,7 @@ const Customer = (props) => {
             {
                 formToggler ? <AddCustomers toggle={toggle} submitForm={submitForm} /> : (
                     <>
-                        <div className='d-flex justify-content-between'>
+                        <div className='d-flex justify-content-between my-4'>
                             <div className='align-middle'>
                                 <input type="text" value={searchCustomer} onChange={handleSearch} placeholder='Search'
                                     className='me-2 border-bottom border-0 border-dark' />
@@ -58,7 +58,6 @@ const Customer = (props) => {
                     </>
                 )
             }
-
         </div>
     )
 }
