@@ -56,8 +56,9 @@ export const asyncNewBill = (formData, reset, setViewBill, setShowModal) => {
                 }
             })
             .catch((error) => {
-                alert('Unsuccessful')
-                alert(error.message)
+                swal(error.message, {
+                    icon: 'error'
+                })
             })
     }
 }
@@ -90,14 +91,16 @@ export const asyncDeleteBill = (id) => {
                         .then((response) => {
                             const result = response.data
                             dispatch(deleteBill(result))
+                            swal("Bill has been deleted!", {
+                                icon: "success",
+                            });
                         })
                         .catch((error) => {
-                            alert(error.message)
+                            swal(error.message, {
+                                icon: 'error'
+                            })
                         })
                     // End Async Delete bill operation
-                    swal("Bill has been deleted!", {
-                        icon: "success",
-                    });
                 }
             });
     }
@@ -114,6 +117,11 @@ export const asyncViewBill = (id, setViewBill) => {
             .then((response) => {
                 const result = response.data
                 setViewBill(result)
+            })
+            .catch((error) => {
+                swal(error.message, {
+                    icon: "error",
+                });
             })
     }
 }

@@ -27,7 +27,7 @@ const Billing = (props) => {
     const searchBillHandle = (event) => {
         setBillSearch(event.target.value)
         const searchCustomer = customers.filter(ele => {
-            return ele.name.toLowerCase().includes(event.target.value)
+            return ele.name.toLowerCase().includes(event.target.value.toLowerCase())
         })
         const searchBill = bills.filter(ele => {
             let data
@@ -50,7 +50,7 @@ const Billing = (props) => {
             </header>
             {switcher ? <AddBill toggle={toggle} /> : (
                 <>
-                    <div className='d-flex justify-content-between'>
+                    <div className='d-flex justify-content-between my-4'>
                         <div className='align-middle'>
                             <input type="text" value={billSearch} onChange={searchBillHandle} placeholder='Search'
                                 className='me-2 border-bottom border-0 border-dark' />
