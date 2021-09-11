@@ -38,7 +38,7 @@ const Product = (props) => {
         const input = event.target.value
         setSearchProduct(input)
         const result = products.filter(ele => {
-            return ele.name.toLowerCase().includes(input)
+            return ele.name.toLowerCase().includes(input.toLowerCase())
         })
         setSearchData(result)
     }
@@ -54,7 +54,7 @@ const Product = (props) => {
                 <AddProduct toggle={toggle} submitForm={submitForm} />
             ) : (
                 <>
-                    <div className='d-flex justify-content-between'>
+                    <div className='d-flex justify-content-between my-4'>
                         <div className='align-middle'>
                             <input type="text" value={searchProduct} onChange={handleSearch} placeholder='Search'
                                 className='me-2 border-bottom border-0 border-dark' />
