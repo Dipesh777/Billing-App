@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { startProduct } from '../../../Actions/productActions'
 
 const AddProduct = (props) => {
-    const dispatch = useDispatch()
     const { toggle, product, submitForm } = props
     const [name, setName] = useState(product ? product.name : '')
     const [price, setPrice] = useState(product ? product.price : '')
@@ -48,11 +46,7 @@ const AddProduct = (props) => {
                 setName('')
                 setPrice('')
             }
-            // redirction to Product list page
-            const redirect = () => {
-                props.history.push('/product')
-            }
-            product ? submitForm(formData, toggle, reset, product._id) : dispatch(startProduct(formData, reset, redirect))
+            product ? submitForm(formData, toggle, reset, product._id) : submitForm(formData, reset, toggle)
 
         } else {
             setFormError(errors)
@@ -61,7 +55,7 @@ const AddProduct = (props) => {
 
     //  Handling cancel button
     const handleCancel = () => {
-        product ? toggle() : props.history.push('/product')
+        toggle()
     }
 
     return (

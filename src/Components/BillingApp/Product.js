@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
 import { useSelector, useDispatch } from 'react-redux'
 import ProductTable from './utilities/ProductTable'
-import { startEditProduct, asyncDeleteProduct } from '../../Actions/productActions'
+import { startProduct, asyncDeleteProduct } from '../../Actions/productActions'
 import AddProduct from './utilities/AddProduct'
 
 
@@ -11,7 +10,6 @@ import AddProduct from './utilities/AddProduct'
 const Product = (props) => {
     const dispatch = useDispatch()
     const [switcher, setSwitcher] = useState(false)
-    const [editProduct, setEditProduct] = useState('')
     const [searchProduct, setSearchProduct] = useState('')
     const [searchData, setSearchData] = useState([])
 
@@ -20,18 +18,15 @@ const Product = (props) => {
         return state.product
     })
 
-    // Handleing Edit functionlity
-    const productHolder = (data) => {
-        setEditProduct(data)
-    }
-
-    const submitForm = (formData, toggle, reset, id) => {
-        dispatch(startEditProduct(formData, toggle, reset, id))
-    }
-
+    //Handling Adding new product
     const toggle = () => {
         setSwitcher(!switcher)
     }
+
+    const submitForm = (formData, reset, toggle) => {
+        dispatch(startProduct(formData, reset, toggle))
+    }
+
 
     // Handling Delete Functionality
     const DeleteItem = (id) => {
@@ -56,7 +51,7 @@ const Product = (props) => {
 
             {/* For Edit OR listing product */}
             {switcher ? (
-                <AddProduct toggle={toggle} product={editProduct} submitForm={submitForm} />
+                <AddProduct toggle={toggle} submitForm={submitForm} />
             ) : (
                 <>
                     <div className='d-flex justify-content-between'>
@@ -65,9 +60,9 @@ const Product = (props) => {
                                 className='me-2 border-bottom border-0 border-dark' />
                             <BsSearch />
                         </div>
-                        <Link to='/product/addproduct' className='btn btn-success'>Add Product +</Link>
+                        <button onClick={toggle} className='btn btn-success'>Add Product +</button>
                     </div>
-                    < ProductTable products={searchProduct ? searchData : products} toggle={toggle} productHolder={productHolder} DeleteItem={DeleteItem} />
+                    < ProductTable products={searchProduct ? searchData : products} DeleteItem={DeleteItem} />
                 </>
             )}
 

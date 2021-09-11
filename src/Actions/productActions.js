@@ -36,7 +36,7 @@ const addProduct = (data) => {
         payload: data
     }
 }
-export const startProduct = (formData, reset, redirect) => {
+export const startProduct = (formData, reset, toggle) => {
     return (dispatch) => {
         axios.post('http://dct-billing-app.herokuapp.com/api/products', formData, {
             headers: {
@@ -48,7 +48,7 @@ export const startProduct = (formData, reset, redirect) => {
                 dispatch(addProduct(result))
                 reset()
                 swal("Success", "New Product Added Successfully", "success");
-                redirect()
+                toggle()
             })
             .catch((error) => {
                 alert(error.message)
