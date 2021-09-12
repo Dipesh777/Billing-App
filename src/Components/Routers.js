@@ -8,6 +8,7 @@ import Customer from './BillingApp/Customer'
 import Product from './BillingApp/Product'
 import Billing from './BillingApp/Billing'
 import Account from './BillingApp/Account'
+import Footer from './Authentication/Footer'
 
 const Routers = (props) => {
 
@@ -17,7 +18,7 @@ const Routers = (props) => {
     const handleLogout = () => {
         localStorage.removeItem('token')
         handleAuth()
-        swal('Logged Out', 'successfully','success')
+        swal('Logged Out', 'successfully', 'success')
 
     }
 
@@ -29,8 +30,8 @@ const Routers = (props) => {
                         <h2 className='fw-normal'>Billing</h2>
                     </header>
 
-                    <div className='d-flex'>
-                        <nav className='bg-secondary sidebar' style={{ width: '300px', height: '100%' }}>
+                    <div className='d-flex'  style={{height:'100%'}}>
+                        <nav className='bg-secondary sidebar' style={{ width: '300px' }}>
                             <ul className='navbar-nav'>
                                 <li className='border py-2 text-center fs-5'>
                                     <Link to='/dashboard' className='text-decoration-none text-white'>Dashboard</Link>
@@ -62,6 +63,7 @@ const Routers = (props) => {
                             <Route path='/account' component={Account} />
                         </section>
                     </div>
+                    <Footer />
                 </>
             ) : (
                 <>
