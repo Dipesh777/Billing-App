@@ -1,5 +1,6 @@
 import React from 'react'
 import Registration from './Registration'
+import Home from './Home'
 
 const AuthContainer = (props) => {
     const redirect = () => {
@@ -12,6 +13,7 @@ const AuthContainer = (props) => {
                     <h1 className='text-white fw-normal text-center'>Get Started With Billing App</h1>
                 </div>
             </div>
+            <Home />
             <Registration redirect={redirect} />
         </main>
     )
