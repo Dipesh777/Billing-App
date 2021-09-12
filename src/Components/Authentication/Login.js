@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import './login.css'
 import { asyncLogin } from '../../Actions/authActions'
+import Footer from './Footer'
 
 
 const Login = (props) => {
@@ -71,36 +72,42 @@ const Login = (props) => {
                     <Link to='/' className='text-decoration-none ps-3 text-dark fs-4'>SignUp</Link>
                 </nav>
             </header>
-            <main className='p-4'>
-                <h2 className='text-success'>Login In Your Accout</h2>
-                <form onSubmit={handleSubmit} className='loginForm'>
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={email}
-                        onChange={inputHandler}
-                        placeholder='Enter your email ID'
-                        className='form-control my-2'
-                    />
-                    {formError.email && <span className='text-danger'>{formError.email}</span>} <br />
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        value={password}
-                        onChange={inputHandler}
-                        placeholder='Enter Your Password'
-                        className='form-control my-2'
-                    />
-                    {formError.password && <span className='text-danger'>{formError.password}</span>} <br />
+            <main className='p-4 d-flex mb-5 justify-content-around'>
+                <div>
+                    <h2 className='text-success my-3'>Login In Your Accout</h2>
+                    <form onSubmit={handleSubmit} className='loginForm' style={{width:'325px'}}>
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            name="email"
+                            value={email}
+                            onChange={inputHandler}
+                            placeholder='Enter your email ID'
+                            className='form-control my-2'
+                        />
+                        {formError.email && <span className='text-danger'>{formError.email}</span>} <br />
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            name="password"
+                            value={password}
+                            onChange={inputHandler}
+                            placeholder='Enter Your Password'
+                            className='form-control my-2'
+                        />
+                        {formError.password && <span className='text-danger'>{formError.password}</span>} <br />
 
-                    {/* Login button */}
-                    <input type="submit" value='Login' className='btn btn-success mt-2 px-4' />
-                    <Link to='/' className='text-decoration-none btn btn-primary mt-2 ms-3'>SignUp</Link>
-                    <small className='m-2 text-muted'>Don't have Account!</small>
-                </form>
+                        {/* Login button */}
+                        <input type="submit" value='Login' className='btn btn-success mt-2 px-4' />
+                        <Link to='/' className='text-decoration-none btn btn-primary mt-2 ms-3'>SignUp</Link>
+                        <small className='m-2 text-muted'>Don't have Account!</small>
+                    </form>
+                </div>
+                <img src="billing-bg.png" alt="App img" />
             </main>
+            <footer className='mt-5'>
+                <Footer />
+            </footer>
         </section>
     )
 }
