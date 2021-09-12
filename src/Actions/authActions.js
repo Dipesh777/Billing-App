@@ -1,4 +1,5 @@
 import axios from 'axios'
+import swal from 'sweetalert'
 
 // Action for Registering new user
 export const asyncRegister = (formData, redirect, resetForm) => {
@@ -7,18 +8,26 @@ export const asyncRegister = (formData, redirect, resetForm) => {
             .then((response) => {
                 const result = response.data
                 if (result.errmsg) {
-                    alert('User Already Exists')
+                    swal('User Already Exists', {
+                        icon: 'error'
+                    })
                 } else if (result.errors) {
-                    alert(result.message)
+                    swal(result.message, {
+                        icon: 'error'
+                    })
                 } else {
                     console.log(result)
                     resetForm()
                     redirect()
-                    alert('you have successfully Register')
+                    swal('you have successfully Register', {
+                        icon: 'success'
+                    })
                 }
             })
             .catch((error) => {
-                alert(error.message)
+                swal(error.message, {
+                    icon: 'error'
+                })
             })
     }
 }
@@ -31,17 +40,23 @@ export const asyncLogin = (formData, resetForm, redirect, handleAuth) => {
             .then((response) => {
                 const result = response.data
                 if (result.errors) {
-                    alert(result.errors)
+                    swal(result.errors, {
+                        icon: 'error'
+                    })
                 } else {
                     localStorage.setItem('token', result.token)
                     resetForm()
-                    alert('successfully login')
+                    swal("successfully logged In", {
+                        icon: 'success'
+                    })
                     redirect()
                     handleAuth()
                 }
             })
             .catch((error) => {
-                alert(error.message)
+                swal(error.message, {
+                    icon: 'error'
+                })
             })
     }
 }

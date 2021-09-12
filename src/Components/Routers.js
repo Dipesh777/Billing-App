@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, Route } from 'react-router-dom'
+import swal from 'sweetalert'
 import AuthContainer from './Authentication/AuthContainer'
 import Login from './Authentication/Login'
 import Dashboard from './BillingApp/Dashboard'
@@ -16,6 +17,8 @@ const Routers = (props) => {
     const handleLogout = () => {
         localStorage.removeItem('token')
         handleAuth()
+        swal('Logged Out', 'successfully','success')
+
     }
 
     return (

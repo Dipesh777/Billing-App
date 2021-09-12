@@ -89,7 +89,7 @@ const Registration = (props) => {
 
 
     return (
-        <div className='d-flex justify-content-center align-items-center'>
+        <div className='d-flex justify-content-around align-items-center'>
 
             {/* Registration form */}
             <form style={{ width: '500px' }} className='m-5' onSubmit={handleSubmit}>

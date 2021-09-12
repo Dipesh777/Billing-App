@@ -1,6 +1,7 @@
 import React from 'react'
 import Registration from './Registration'
 import Home from './Home'
+import Footer from './Footer'
 
 const AuthContainer = (props) => {
     const redirect = () => {
@@ -15,6 +16,7 @@ const AuthContainer = (props) => {
             </div>
             <Home />
             <Registration redirect={redirect} />
+            <Footer />
         </main>
     )
 }
