@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { BsTrash, BsDashSquare, BsPlusSquare } from 'react-icons/bs'
 import Select from 'react-select'
 import Datepicker from 'react-datepicker'
-import { v4 as uuidv4 } from 'uuid'
 import 'react-datepicker/dist/react-datepicker.css'
 import { asyncProduct } from '../../../Actions/productActions'
 import { asyncNewBill } from '../../../Actions/billingAction'
@@ -18,7 +17,6 @@ const AddBill = (props) => {
     const [quantity, setQuantity] = useState('1')
     const [cart, setCart] = useState([])
     const [showCart, setShowCart] = useState([])
-    // const [disable, setDisable] = useState(false)
     const [formError, setFormError] = useState({})
     const error = {}
 
@@ -72,7 +70,7 @@ const AddBill = (props) => {
         }
     }
 
-    // ------------------------ADD CART-------------------
+    // ------------------------Start ADD CART-------------------
 
     const addCart = (event) => {
         event.preventDefault()
@@ -94,13 +92,15 @@ const AddBill = (props) => {
         }
     }
 
+    // Data Generation For Cart show Table
     const cartForm = () => {
         const cartProduct = products.find(ele => {
             return ele._id === productSelect
         })
+
         // data for showing detail in cart table
         const showData = {
-            id: uuidv4(),
+            id: cartProduct._id,
             product: cartProduct.name,
             quantity: quantity,
             remove: function () {
@@ -114,7 +114,6 @@ const AddBill = (props) => {
             disable: quantity === "1" ? true : false
         }
         setShowCart([...showCart, showData])
-        console.log(showData)
     }
 
     // Cart Quantity count Functionality
@@ -126,19 +125,27 @@ const AddBill = (props) => {
                     { ...ele, quantity: ele.add(), total: ele.quantity * ele.price, disable: ele.quantity === 1 ? true : false }
                 ) : ele
             })
+            const cartQuantity = cart.map(ele => {
+                return ele.product === id ? { ...ele, quantity: Number(ele.quantity) + 1 } : ele
+            })
             setShowCart(result)
+            setCart(cartQuantity)
         } else if (action === 'decrement') {
             const result = showCart.map(ele => {
                 return ele.id === id ? (
                     { ...ele, quantity: ele.remove(), total: ele.quantity * ele.price, disable: ele.quantity === 1 ? true : false }
                 ) : ele
             })
+            const cartQuantity = cart.map(ele => {
+                return ele.product === id ? { ...ele, quantity: Number(ele.quantity) - 1 } : ele
+            })
             setShowCart(result)
+            setCart(cartQuantity)
         }
     }
 
 
-    // All Product Total Prce
+    // All Product Total Price
     const cartTotal = () => {
         let result = 0
         showCart.forEach(ele => {
@@ -155,7 +162,11 @@ const AddBill = (props) => {
         const deleteItem = showCart.filter((ele, ind) => {
             return ind !== idx
         })
+        const deleteCart = cart.filter((ele, ind) => {
+            return ind !== idx
+        })
         setShowCart(deleteItem)
+        setCart(deleteCart)
     }
 
 
