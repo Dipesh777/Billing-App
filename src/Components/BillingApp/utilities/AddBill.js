@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { BsTrash, BsDashSquare, BsPlusSquare } from 'react-icons/bs'
 import Select from 'react-select'
 import Datepicker from 'react-datepicker'
+import { v4 as uuidv4 } from 'uuid'
 import 'react-datepicker/dist/react-datepicker.css'
 import { asyncProduct } from '../../../Actions/productActions'
 import { asyncNewBill } from '../../../Actions/billingAction'
@@ -14,9 +15,10 @@ const AddBill = (props) => {
     const [date, setDate] = useState(new Date())
     const [customerSelect, setCustomerSelect] = useState('')
     const [productSelect, setProductSelect] = useState('')
-    const [quantity, setQuantity] = useState('')
+    const [quantity, setQuantity] = useState('1')
     const [cart, setCart] = useState([])
     const [showCart, setShowCart] = useState([])
+    // const [disable, setDisable] = useState(false)
     const [formError, setFormError] = useState({})
     const error = {}
 
@@ -47,7 +49,7 @@ const AddBill = (props) => {
             setQuantity(event.target.value)
         }
     }
-    
+
     // Handling react select for customer
     const handleCustomer = (customerSelect) => {
         setCustomerSelect(customerSelect)
@@ -85,7 +87,7 @@ const AddBill = (props) => {
             }
             setCart([...cart, cartData])
             setProductSelect('')
-            setQuantity('')
+            setQuantity('1')
             cartForm()
         } else {
             setFormError(error)
@@ -98,20 +100,45 @@ const AddBill = (props) => {
         })
         // data for showing detail in cart table
         const showData = {
+            id: uuidv4(),
             product: cartProduct.name,
             quantity: quantity,
             remove: function () {
-                return this.quantity -= 1
+                return this.quantity = Number(this.quantity) - 1
             },
             add: function () {
-                return this.quantity += 1
+                return this.quantity = Number(this.quantity) + 1
             },
             price: cartProduct.price,
-            total: quantity * cartProduct.price
+            total: quantity * cartProduct.price,
+            disable: quantity === "1" ? true : false
         }
         setShowCart([...showCart, showData])
+        console.log(showData)
     }
-    // All Product Total Price
+
+    // Cart Quantity count Functionality
+    const quantityCount = (e, id, action) => {
+        e.preventDefault()
+        if (action === 'increment') {
+            const result = showCart.map(ele => {
+                return ele.id === id ? (
+                    { ...ele, quantity: ele.add(), total: ele.quantity * ele.price, disable: ele.quantity === 1 ? true : false }
+                ) : ele
+            })
+            setShowCart(result)
+        } else if (action === 'decrement') {
+            const result = showCart.map(ele => {
+                return ele.id === id ? (
+                    { ...ele, quantity: ele.remove(), total: ele.quantity * ele.price, disable: ele.quantity === 1 ? true : false }
+                ) : ele
+            })
+            setShowCart(result)
+        }
+    }
+
+
+    // All Product Total Prce
     const cartTotal = () => {
         let result = 0
         showCart.forEach(ele => {
@@ -119,7 +146,7 @@ const AddBill = (props) => {
         })
         return result
     }
-    // ------------------------ADD CART-------------------
+    // ------------------------End  ADD CART-------------------
 
 
     // Delete Cart Item
@@ -204,8 +231,10 @@ const AddBill = (props) => {
 
                 {/* Cart */}
                 <div className='ms-5'>
-                    <h3 style={{ width: '300px' }} className='p-5'>Cart Item - {showCart.length}</h3>
-                    {showCart.length === 0 ? <h3 className='text-info border text-center' style={{ paddingTop: '100px', paddingBottom: '100px' }}>Cart Is Empty</h3> : (
+                    <h3>Cart Item - {showCart.length}</h3>
+                    {showCart.length === 0 ? (
+                        <h3 className='text-info border text-center ps-4 pe-4 mt-4' style={{ paddingTop: '100px', paddingBottom: '100px' }}>Cart Is Empty</h3>
+                    ) : (
                         <table className='table text-center align-middle' style={{ width: '200px' }}>
                             <thead>
                                 <tr>
@@ -223,14 +252,12 @@ const AddBill = (props) => {
                                             <td><button className='btn text-danger' onClick={(e) => cartDelete(e, idx)}><BsTrash /></button></td>
                                             <td>{ele.product}</td>
                                             <td>
-                                                <button className='btn p-0 mb-2 me-1' onClick={(e) => {
-                                                    e.preventDefault()
-                                                    ele.remove()
+                                                <button disabled={ele.disable} className='btn p-0 mb-2 me-1' onClick={(e) => {
+                                                    quantityCount(e, ele.id, 'decrement')
                                                 }}><BsDashSquare /></button>
                                                 {ele.quantity}
                                                 <button className='btn p-0 mb-2 ms-1' onClick={(e) => {
-                                                    e.preventDefault()
-                                                    ele.add()
+                                                    quantityCount(e, ele.id, 'increment')
                                                 }}><BsPlusSquare /></button></td>
                                             <td>{ele.price}</td>
                                             <td>{ele.total}</td>
@@ -253,7 +280,7 @@ const AddBill = (props) => {
 
 
             {/* After Successfull Generation Show modal */}
-            <ViewBill show={showModal} hide={() => setShowModal(false)} viewBill={viewBill} toggle={toggle}/>
+            <ViewBill show={showModal} hide={() => setShowModal(false)} viewBill={viewBill} toggle={toggle} />
         </>
 
     )
