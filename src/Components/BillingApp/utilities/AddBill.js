@@ -14,7 +14,7 @@ const AddBill = (props) => {
     const [date, setDate] = useState(new Date())
     const [customerSelect, setCustomerSelect] = useState('')
     const [productSelect, setProductSelect] = useState('')
-    const [quantity, setQuantity] = useState('')
+    const [quantity, setQuantity] = useState('1')
     const [cart, setCart] = useState([])
     const [showCart, setShowCart] = useState([])
     const [formError, setFormError] = useState({})
@@ -47,7 +47,7 @@ const AddBill = (props) => {
             setQuantity(event.target.value)
         }
     }
-    
+
     // Handling react select for customer
     const handleCustomer = (customerSelect) => {
         setCustomerSelect(customerSelect)
@@ -70,7 +70,7 @@ const AddBill = (props) => {
         }
     }
 
-    // ------------------------ADD CART-------------------
+    // ------------------------Start ADD CART-------------------
 
     const addCart = (event) => {
         event.preventDefault()
@@ -85,32 +85,66 @@ const AddBill = (props) => {
             }
             setCart([...cart, cartData])
             setProductSelect('')
-            setQuantity('')
+            setQuantity('1')
             cartForm()
         } else {
             setFormError(error)
         }
     }
 
+    // Data Generation For Cart show Table
     const cartForm = () => {
         const cartProduct = products.find(ele => {
             return ele._id === productSelect
         })
+
         // data for showing detail in cart table
         const showData = {
+            id: cartProduct._id,
             product: cartProduct.name,
             quantity: quantity,
             remove: function () {
-                return this.quantity -= 1
+                return this.quantity = Number(this.quantity) - 1
             },
             add: function () {
-                return this.quantity += 1
+                return this.quantity = Number(this.quantity) + 1
             },
             price: cartProduct.price,
-            total: quantity * cartProduct.price
+            total: quantity * cartProduct.price,
+            disable: quantity === "1" ? true : false
         }
         setShowCart([...showCart, showData])
     }
+
+    // Cart Quantity count Functionality
+    const quantityCount = (e, id, action) => {
+        e.preventDefault()
+        if (action === 'increment') {
+            const result = showCart.map(ele => {
+                return ele.id === id ? (
+                    { ...ele, quantity: ele.add(), total: ele.quantity * ele.price, disable: ele.quantity === 1 ? true : false }
+                ) : ele
+            })
+            const cartQuantity = cart.map(ele => {
+                return ele.product === id ? { ...ele, quantity: Number(ele.quantity) + 1 } : ele
+            })
+            setShowCart(result)
+            setCart(cartQuantity)
+        } else if (action === 'decrement') {
+            const result = showCart.map(ele => {
+                return ele.id === id ? (
+                    { ...ele, quantity: ele.remove(), total: ele.quantity * ele.price, disable: ele.quantity === 1 ? true : false }
+                ) : ele
+            })
+            const cartQuantity = cart.map(ele => {
+                return ele.product === id ? { ...ele, quantity: Number(ele.quantity) - 1 } : ele
+            })
+            setShowCart(result)
+            setCart(cartQuantity)
+        }
+    }
+
+
     // All Product Total Price
     const cartTotal = () => {
         let result = 0
@@ -119,7 +153,7 @@ const AddBill = (props) => {
         })
         return result
     }
-    // ------------------------ADD CART-------------------
+    // ------------------------End  ADD CART-------------------
 
 
     // Delete Cart Item
@@ -128,7 +162,11 @@ const AddBill = (props) => {
         const deleteItem = showCart.filter((ele, ind) => {
             return ind !== idx
         })
+        const deleteCart = cart.filter((ele, ind) => {
+            return ind !== idx
+        })
         setShowCart(deleteItem)
+        setCart(deleteCart)
     }
 
 
@@ -204,8 +242,10 @@ const AddBill = (props) => {
 
                 {/* Cart */}
                 <div className='ms-5'>
-                    <h3 style={{ width: '300px' }} className='p-5'>Cart Item - {showCart.length}</h3>
-                    {showCart.length === 0 ? <h3 className='text-info border text-center' style={{ paddingTop: '100px', paddingBottom: '100px' }}>Cart Is Empty</h3> : (
+                    <h3>Cart Item - {showCart.length}</h3>
+                    {showCart.length === 0 ? (
+                        <h3 className='text-info border text-center ps-4 pe-4 mt-4' style={{ paddingTop: '100px', paddingBottom: '100px' }}>Cart Is Empty</h3>
+                    ) : (
                         <table className='table text-center align-middle' style={{ width: '200px' }}>
                             <thead>
                                 <tr>
@@ -223,14 +263,12 @@ const AddBill = (props) => {
                                             <td><button className='btn text-danger' onClick={(e) => cartDelete(e, idx)}><BsTrash /></button></td>
                                             <td>{ele.product}</td>
                                             <td>
-                                                <button className='btn p-0 mb-2 me-1' onClick={(e) => {
-                                                    e.preventDefault()
-                                                    ele.remove()
+                                                <button disabled={ele.disable} className='btn p-0 mb-2 me-1' onClick={(e) => {
+                                                    quantityCount(e, ele.id, 'decrement')
                                                 }}><BsDashSquare /></button>
                                                 {ele.quantity}
                                                 <button className='btn p-0 mb-2 ms-1' onClick={(e) => {
-                                                    e.preventDefault()
-                                                    ele.add()
+                                                    quantityCount(e, ele.id, 'increment')
                                                 }}><BsPlusSquare /></button></td>
                                             <td>{ele.price}</td>
                                             <td>{ele.total}</td>
@@ -253,7 +291,7 @@ const AddBill = (props) => {
 
 
             {/* After Successfull Generation Show modal */}
-            <ViewBill show={showModal} hide={() => setShowModal(false)} viewBill={viewBill} toggle={toggle}/>
+            <ViewBill show={showModal} hide={() => setShowModal(false)} viewBill={viewBill} toggle={toggle} />
         </>
 
     )
