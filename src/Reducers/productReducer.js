@@ -1,4 +1,5 @@
 import { ALL_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, DELETE_PRODUCT } from "../Actions/productActions"
+import { LOGOUT } from '../Actions/authActions'
 const initialValue = []
 
 const productReducer = (state = initialValue, action) => {
@@ -18,6 +19,9 @@ const productReducer = (state = initialValue, action) => {
             return state.filter((ele) => {
                 return ele._id !== action.payload
             })
+        }
+        case LOGOUT: {
+            return state = initialValue
         }
         default: {
             return [...state]

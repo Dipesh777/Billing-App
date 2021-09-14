@@ -21,7 +21,6 @@ const Dashboard = (props) => {
         dispatch(asyncProduct())
         dispatch(startAllBills())
     }, [])
-    console.log('I am Dashboard')
 
     return (
         <main>

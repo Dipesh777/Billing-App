@@ -1,4 +1,5 @@
 import { ALL_BILLS, NEW_BILL, DELETE_BILL } from "../Actions/billingAction"
+import { LOGOUT } from '../Actions/authActions'
 const initialValue = []
 
 const billReducer = (state = initialValue, action) => {
@@ -13,6 +14,9 @@ const billReducer = (state = initialValue, action) => {
             return state.filter(ele => {
                 return ele._id !== action.payload._id
             })
+        }
+        case LOGOUT: {
+            return state = initialValue
         }
         default: {
             return [...state]

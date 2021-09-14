@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link, Route } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import swal from 'sweetalert'
+import { startLogout } from '../Actions/authActions'
 import AuthContainer from './Authentication/AuthContainer'
 import Login from './Authentication/Login'
 import Registration from './Authentication/Registration'
@@ -12,12 +14,14 @@ import Account from './BillingApp/Account'
 import Footer from './Authentication/Footer'
 
 const Routers = (props) => {
+    const dispatch = useDispatch()
 
     const { handleAuth, isLoggedIn } = props
 
     // Handle logout
     const handleLogout = () => {
         localStorage.removeItem('token')
+        dispatch(startLogout())
         handleAuth()
         swal('Logged Out', 'successfully', 'success')
 
