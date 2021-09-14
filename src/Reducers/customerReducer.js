@@ -1,5 +1,6 @@
 
 import { ALL_CUSTOMER, ADD_CUSTOMER, DELETE_CUSTOMER, EDIT_CUSTOMER } from '../Actions/billingAppActions'
+import { LOGOUT } from '../Actions/authActions'
 const initialValue = []
 
 const customerReducer = (state = initialValue, action) => {
@@ -23,6 +24,9 @@ const customerReducer = (state = initialValue, action) => {
             return state.filter((ele) => {
                 return ele._id !== action.payload
             })
+        }
+        case LOGOUT: {
+            return state = initialValue
         }
         default: {
             return [...state]

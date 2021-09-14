@@ -60,3 +60,11 @@ export const asyncLogin = (formData, resetForm, redirect, handleAuth) => {
             })
     }
 }
+
+// Action for Logout Resetting all reducers
+export const LOGOUT = 'LOGOUT'
+export const startLogout = () => {
+    return {
+        type: LOGOUT
+    }
+}
