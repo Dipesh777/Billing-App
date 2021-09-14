@@ -69,7 +69,7 @@ const Login = (props) => {
                 <h2 className='p-3 text-center bg-success text-white'>Welcome To Billing App</h2>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <Link to='/' className='text-decoration-none ps-3 text-dark fs-4'>Home</Link>
-                    <Link to='/' className='text-decoration-none ps-3 text-dark fs-4'>SignUp</Link>
+                    <Link to='/registration' className='text-decoration-none ps-3 text-dark fs-4'>SignUp</Link>
                 </nav>
             </header>
             <main className='p-4 d-flex mb-5 justify-content-around'>
@@ -105,7 +105,10 @@ const Login = (props) => {
                 </div>
                 <img src="billing-bg.png" alt="App img" />
             </main>
-            <footer className='mt-5'>
+            <h6>Login Id and password for Demo</h6>
+            <p className='m-0'>ID - dipesh0@gmail.com</p>
+            <p className='m-0'>Password - dipesh123</p>
+            <footer className='mt-2'>
                 <Footer />
             </footer>
         </section>

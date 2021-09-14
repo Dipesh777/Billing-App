@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { asyncRegister } from '../../Actions/authActions'
+import Footer from './Footer'
 
 const Registration = (props) => {
-    const { redirect } = props
     const dispatch = useDispatch()
     const [business, setBusiness] = useState('')
     const [name, setName] = useState('')
@@ -68,9 +68,10 @@ const Registration = (props) => {
                 address: address
             }
             // // redirecting to login
-            // const redirect = () => {
-            //     props.history.push('/login')
-            // }
+            const redirect = () => {
+                props.history.push('/login')
+            }
+
             // reset form
             const resetForm = () => {
                 setBusiness('')
@@ -89,75 +90,86 @@ const Registration = (props) => {
 
 
     return (
-        <div className='d-flex justify-content-around align-items-center'>
+        <div className='bg-light'>
+            <header>
+                <h2 className='p-3 text-center bg-success text-white'>Welcome To Billing App</h2>
+                <nav className="navbar navbar-expand-lg navbar-light bg-white mx-2">
+                    <Link to='/' className='text-decoration-none ps-3 text-dark fs-4'>Home</Link>
+                    <Link to='/login' className='text-decoration-none ps-3 text-dark fs-4'>Login</Link>
+                </nav>
+            </header>
 
-            {/* Registration form */}
-            <form style={{ width: '500px' }} className='m-5' onSubmit={handleSubmit}>
+            <div className='d-flex justify-content-around align-items-center'>
 
-                <h1 className='text-success my-4'>Registration</h1>
-                <label className='fs-4'>Business Name</label>
-                <input
-                    type="text"
-                    className='form-control my-1'
-                    name='business'
-                    value={business}
-                    onChange={handleFormInput}
-                />
-                {formError.business && <span className='text-danger'>{formError.business}</span>} <br />
+                {/* Registration form */}
+                <form style={{ width: '500px' }} className='m-5' onSubmit={handleSubmit}>
 
-                <label className='fs-4'>User Name</label>
-                <input
-                    type="text"
-                    className='form-control my-1'
-                    name='name'
-                    value={name}
-                    onChange={handleFormInput}
-                />
-                {formError.name && <span className='text-danger'>{formError.name}</span>} <br />
+                    <h1 className='text-success my-4'>Registration</h1>
+                    <label className='fs-4'>Business Name</label>
+                    <input
+                        type="text"
+                        className='form-control my-1'
+                        name='business'
+                        value={business}
+                        onChange={handleFormInput}
+                    />
+                    {formError.business && <span className='text-danger'>{formError.business}</span>} <br />
 
-                <label className='fs-4'>Password</label>
-                <input
-                    type="password"
-                    className='form-control my-1'
-                    name='password'
-                    value={password}
-                    onChange={handleFormInput}
-                />
-                {formError.password && <span className='text-danger'>{formError.password}</span>} <br />
+                    <label className='fs-4'>User Name</label>
+                    <input
+                        type="text"
+                        className='form-control my-1'
+                        name='name'
+                        value={name}
+                        onChange={handleFormInput}
+                    />
+                    {formError.name && <span className='text-danger'>{formError.name}</span>} <br />
 
-                <label className='fs-4'>Email</label>
-                <input
-                    type="email"
-                    className='form-control my-1'
-                    name='email'
-                    value={email}
-                    onChange={handleFormInput}
-                />
-                {formError.email && <span className='text-danger'>{formError.email}</span>} <br />
+                    <label className='fs-4'>Password</label>
+                    <input
+                        type="password"
+                        className='form-control my-1'
+                        name='password'
+                        value={password}
+                        onChange={handleFormInput}
+                    />
+                    {formError.password && <span className='text-danger'>{formError.password}</span>} <br />
 
-                <label className='fs-4'>Address</label>
-                <textarea
-                    cols="30" rows="3"
-                    className='form-control my-1'
-                    name='address'
-                    value={address}
-                    onChange={handleFormInput}>
-                </textarea>
-                {formError.address && <span className='text-danger'>{formError.address}</span>} <br />
+                    <label className='fs-4'>Email</label>
+                    <input
+                        type="email"
+                        className='form-control my-1'
+                        name='email'
+                        value={email}
+                        onChange={handleFormInput}
+                    />
+                    {formError.email && <span className='text-danger'>{formError.email}</span>} <br />
 
-                {/* submit Buttton */}
-                <input
-                    type="submit"
-                    className='btn btn-primary my-1' />
-            </form>
+                    <label className='fs-4'>Address</label>
+                    <textarea
+                        cols="30" rows="3"
+                        className='form-control my-1'
+                        name='address'
+                        value={address}
+                        onChange={handleFormInput}>
+                    </textarea>
+                    {formError.address && <span className='text-danger'>{formError.address}</span>} <br />
 
-            {/* Link to Login Page */}
-            <div className='m-2 text-center'>
-                <h1 className='text-success'>Already <br /> Have an Accout!</h1>
-                <p>Login By Click On Login Button</p>
-                <button className='btn btn-primary'><Link to='/login' className='text-white text-decoration-none'>Login</Link></button>
+                    {/* submit Buttton */}
+                    <input
+                        type="submit"
+                        className='btn btn-primary my-1' />
+                </form>
+
+                {/* Link to Login Page */}
+                <div className='m-2 text-center'>
+                    <h1 className='text-success'>Already <br /> Have an Accout!</h1>
+                    <p>Login By Click On Login Button</p>
+                    <button className='btn btn-primary'><Link to='/login' className='text-white text-decoration-none'>Login</Link></button>
+                </div>
+
             </div>
-
+            <Footer />
         </div>
     )
 }
