@@ -75,7 +75,7 @@ const Login = (props) => {
             <main className='p-4 d-flex mb-5 justify-content-around'>
                 <div>
                     <h2 className='text-success my-3'>Login In Your Accout</h2>
-                    <form onSubmit={handleSubmit} className='loginForm' style={{width:'325px'}}>
+                    <form onSubmit={handleSubmit} className='loginForm' style={{ width: '325px' }}>
                         <label>Email</label>
                         <input
                             type="email"
@@ -99,7 +99,7 @@ const Login = (props) => {
 
                         {/* Login button */}
                         <input type="submit" value='Login' className='btn btn-success mt-2 px-4' />
-                        <Link to='/' className='text-decoration-none btn btn-primary mt-2 ms-3'>SignUp</Link>
+                        <Link to='/registration' className='text-decoration-none btn btn-primary mt-2 ms-3'>SignUp</Link>
                         <small className='m-2 text-muted'>Don't have Account!</small>
                     </form>
                 </div>
