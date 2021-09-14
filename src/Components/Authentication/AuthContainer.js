@@ -4,9 +4,7 @@ import Home from './Home'
 import Footer from './Footer'
 
 const AuthContainer = (props) => {
-    const redirect = () => {
-        props.history.push('/login')
-    }
+   
     return (
         <main className='m-3 bg-light'>
             <div className='card bg-success'>
@@ -15,7 +13,6 @@ const AuthContainer = (props) => {
                 </div>
             </div>
             <Home />
-            <Registration redirect={redirect} />
             <Footer />
         </main>
     )
