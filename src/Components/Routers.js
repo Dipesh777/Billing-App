@@ -3,6 +3,7 @@ import { Link, Route } from 'react-router-dom'
 import swal from 'sweetalert'
 import AuthContainer from './Authentication/AuthContainer'
 import Login from './Authentication/Login'
+import Registration from './Authentication/Registration'
 import Dashboard from './BillingApp/Dashboard'
 import Customer from './BillingApp/Customer'
 import Product from './BillingApp/Product'
@@ -30,7 +31,7 @@ const Routers = (props) => {
                         <h2 className='fw-normal'>Billing</h2>
                     </header>
 
-                    <div className='d-flex'  style={{height:'100%'}}>
+                    <div className='d-flex' style={{ height: '100%' }}>
                         <nav className='bg-secondary sidebar' style={{ width: '300px' }}>
                             <ul className='navbar-nav'>
                                 <li className='border py-2 text-center fs-5'>
@@ -69,6 +70,7 @@ const Routers = (props) => {
                 <>
 
                     <Route path='/' component={AuthContainer} exact={true} />
+                    <Route path='/registration' component={Registration} exact={true} />
                     <Route path='/login' render={(props) => {
                         return <Login
                             {...props}

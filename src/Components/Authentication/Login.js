@@ -69,13 +69,13 @@ const Login = (props) => {
                 <h2 className='p-3 text-center bg-success text-white'>Welcome To Billing App</h2>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <Link to='/' className='text-decoration-none ps-3 text-dark fs-4'>Home</Link>
-                    <Link to='/' className='text-decoration-none ps-3 text-dark fs-4'>SignUp</Link>
+                    <Link to='/registration' className='text-decoration-none ps-3 text-dark fs-4'>SignUp</Link>
                 </nav>
             </header>
             <main className='p-4 d-flex mb-5 justify-content-around'>
                 <div>
                     <h2 className='text-success my-3'>Login In Your Accout</h2>
-                    <form onSubmit={handleSubmit} className='loginForm' style={{width:'325px'}}>
+                    <form onSubmit={handleSubmit} className='loginForm' style={{ width: '325px' }}>
                         <label>Email</label>
                         <input
                             type="email"
@@ -99,13 +99,16 @@ const Login = (props) => {
 
                         {/* Login button */}
                         <input type="submit" value='Login' className='btn btn-success mt-2 px-4' />
-                        <Link to='/' className='text-decoration-none btn btn-primary mt-2 ms-3'>SignUp</Link>
+                        <Link to='/registration' className='text-decoration-none btn btn-primary mt-2 ms-3'>SignUp</Link>
                         <small className='m-2 text-muted'>Don't have Account!</small>
                     </form>
                 </div>
                 <img src="billing-bg.png" alt="App img" />
             </main>
-            <footer className='mt-5'>
+            <h6>Login Id and password for Demo</h6>
+            <p className='m-0'>ID - dipesh0@gmail.com</p>
+            <p className='m-0'>Password - dipesh123</p>
+            <footer className='mt-2'>
                 <Footer />
             </footer>
         </section>
