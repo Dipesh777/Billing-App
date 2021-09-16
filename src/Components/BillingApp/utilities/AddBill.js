@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import swal from 'sweetalert'
 import { BsTrash, BsDashSquare, BsPlusSquare } from 'react-icons/bs'
 import Select from 'react-select'
 import Datepicker from 'react-datepicker'
@@ -159,14 +160,29 @@ const AddBill = (props) => {
     // Delete Cart Item
     const cartDelete = (e, idx) => {
         e.preventDefault()
-        const deleteItem = showCart.filter((ele, ind) => {
-            return ind !== idx
+        swal({
+            title: "Are you sure?",
+            text: "you want to remove product",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
         })
-        const deleteCart = cart.filter((ele, ind) => {
-            return ind !== idx
-        })
-        setShowCart(deleteItem)
-        setCart(deleteCart)
+            .then((willDelete) => {
+                if (willDelete) {
+                    const deleteItem = showCart.filter((ele, ind) => {
+                        return ind !== idx
+                    })
+                    const deleteCart = cart.filter((ele, ind) => {
+                        return ind !== idx
+                    })
+                    setShowCart(deleteItem)
+                    setCart(deleteCart)
+                    swal("product Removed", {
+                        icon: "success",
+                    });
+                }
+            });
+
     }
 
 
