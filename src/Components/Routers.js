@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, Route } from 'react-router-dom'
+import PrivateRoute from '../helper/PrivateRoute'
 import { useDispatch } from 'react-redux'
 import swal from 'sweetalert'
 import { startLogout } from '../Actions/authActions'
@@ -61,11 +62,11 @@ const Routers = (props) => {
                         </nav>
 
                         <section className='w-100'>
-                            <Route path='/dashboard' component={Dashboard} />
-                            <Route path='/customer' component={Customer} />
-                            <Route path='/product' component={Product} exact={true} />
-                            <Route path='/billing' component={Billing} exact={true} />
-                            <Route path='/account' component={Account} />
+                            <PrivateRoute path='/dashboard' component={Dashboard} exact={true} />
+                            <PrivateRoute path='/customer' component={Customer} exact={true} />
+                            <PrivateRoute path='/product' component={Product} exact={true} />
+                            <PrivateRoute path='/billing' component={Billing} exact={true} />
+                            <PrivateRoute path='/account' component={Account} exact={true} />
                         </section>
                     </div>
                     <Footer />
@@ -81,6 +82,12 @@ const Routers = (props) => {
                             handleAuth={handleAuth}
                         />
                     }} exact={true} />
+
+                    <PrivateRoute path='/dashboard' component={Dashboard} exact={true} />
+                    <PrivateRoute path='/customer' component={Customer} exact={true} />
+                    <PrivateRoute path='/product' component={Product} exact={true} />
+                    <PrivateRoute path='/billing' component={Billing} exact={true} />
+                    <PrivateRoute path='/account' component={Account} exact={true} />
                 </>
             )}
         </main>
