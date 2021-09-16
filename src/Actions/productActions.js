@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../config/axios-config'
 import swal from 'sweetalert'
 
 
@@ -13,7 +13,7 @@ const allProducts = (data) => {
 
 export const asyncProduct = () => {
     return (dispatch) => {
-        axios.get('https://dct-billing-app.herokuapp.com/api/products', {
+        axios.get('/products', {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -38,7 +38,7 @@ const addProduct = (data) => {
 }
 export const startProduct = (formData, reset, toggle) => {
     return (dispatch) => {
-        axios.post('https://dct-billing-app.herokuapp.com/api/products', formData, {
+        axios.post('/products', formData, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -79,7 +79,7 @@ export const startEditProduct = (formData, toggle, reset, id) => {
                 if (willEdit) {
 
                     // Start Asyn call for edit Product Info
-                    axios.put(`https://dct-billing-app.herokuapp.com/api/products/${id}`, formData, {
+                    axios.put(`/products/${id}`, formData, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('token')}`
                         }
@@ -125,7 +125,7 @@ export const asyncDeleteProduct = (id) => {
                 if (willDelete) {
 
                     // Start Async Deleting product
-                    axios.delete(`https://dct-billing-app.herokuapp.com/api/products/${id}`, {
+                    axios.delete(`/products/${id}`, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('token')}`
                         }

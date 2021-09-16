@@ -1,10 +1,10 @@
-import axios from 'axios'
+import axios from '../config/axios-config'
 import swal from 'sweetalert'
 
 // Action for Registering new user
 export const asyncRegister = (formData, redirect, resetForm) => {
     return () => {
-        axios.post('https://dct-billing-app.herokuapp.com/api/users/register', formData)
+        axios.post('/users/register', formData)
             .then((response) => {
                 const result = response.data
                 if (result.errmsg) {
@@ -36,7 +36,7 @@ export const asyncRegister = (formData, redirect, resetForm) => {
 
 export const asyncLogin = (formData, resetForm, redirect, handleAuth) => {
     return () => {
-        axios.post('https://dct-billing-app.herokuapp.com/api/users/login', formData)
+        axios.post('/users/login', formData)
             .then((response) => {
                 const result = response.data
                 if (result.errors) {
