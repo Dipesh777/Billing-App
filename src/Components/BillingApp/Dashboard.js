@@ -69,7 +69,7 @@ const Dashboard = (props) => {
             <div >
                 <DashChart />
             </div>
-        </main>
+        </main >
     )
 }
 
