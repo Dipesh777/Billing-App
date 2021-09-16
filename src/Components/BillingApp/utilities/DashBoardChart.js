@@ -4,12 +4,9 @@ import moment from 'moment'
 import { useSelector } from 'react-redux'
 
 const DashChart = (props) => {
-
-
     const bills = useSelector((state) => {
         return state.bills
     })
-    console.log('bills', bills)
     const month = moment().month()
 
 
@@ -27,10 +24,6 @@ const DashChart = (props) => {
 
     const monthlySales = Object.entries(sales)
     monthlySales.unshift(["month", "sales"])
-    console.log(monthlySales)
-
-
-
 
     return (
 
@@ -43,10 +36,8 @@ const DashChart = (props) => {
             options={{
                 title: '1 year Company sales',
                 hAxis: { title: 'Year', titleTextStyle: { color: '#333' } },
-                vAxis: { title:'Sales', minValue: 0 },
-                // For the legend to fit, we make the chart area smaller
+                vAxis: { title: 'Sales', minValue: 0 },
                 chartArea: { width: '70%', height: '70%' },
-                // lineWidth: 25
             }}
         />
     )

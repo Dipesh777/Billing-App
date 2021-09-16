@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../config/axios-config'
 import swal from 'sweetalert'
 
 // Action for fetching All bills
@@ -11,7 +11,7 @@ const allBills = (data) => {
 }
 export const startAllBills = () => {
     return (dispatch) => {
-        axios.get('https://dct-billing-app.herokuapp.com/api/bills', {
+        axios.get('/bills', {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -38,7 +38,7 @@ export const asyncNewBill = (formData, reset, setViewBill, setShowModal) => {
     return (dispatch) => {
 
         // Start Async call for generating bill
-        axios.post('https://dct-billing-app.herokuapp.com/api/bills', formData, {
+        axios.post('/bills', formData, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -83,7 +83,7 @@ export const asyncDeleteBill = (id) => {
             .then((willDelete) => {
                 if (willDelete) {
                     // Start Async Delete bill operation
-                    axios.delete(`https://dct-billing-app.herokuapp.com/api/bills/${id}`, {
+                    axios.delete(`/bills/${id}`, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('token')}`
                         }
@@ -109,7 +109,7 @@ export const asyncDeleteBill = (id) => {
 // Action for view Bills using bill id
 export const asyncViewBill = (id, setViewBill) => {
     return () => {
-        axios.get(`https://dct-billing-app.herokuapp.com/api/bills/${id}`, {
+        axios.get(`/bills/${id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }

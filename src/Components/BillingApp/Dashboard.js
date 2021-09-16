@@ -66,10 +66,10 @@ const Dashboard = (props) => {
                     </div>
                 </div>
             </section>
-            <div className='' >
+            <div >
                 <DashChart />
             </div>
-        </main>
+        </main >
     )
 }
 

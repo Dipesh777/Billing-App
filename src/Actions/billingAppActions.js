@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../config/axios-config'
 import swal from 'sweetalert'
 
 // Action Of getting LoggedIn user Account Details
@@ -11,7 +11,7 @@ const user = (data) => {
 }
 export const asyncUser = () => {
     return (dispatch) => {
-        axios.get('https://dct-billing-app.herokuapp.com/api/users/account', {
+        axios.get('/users/account', {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -38,7 +38,7 @@ const allCustomer = (data) => {
 }
 export const startCustomers = () => {
     return (dispatch) => {
-        axios.get('https://dct-billing-app.herokuapp.com/api/customers', {
+        axios.get('/customers', {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -63,7 +63,7 @@ const addCustomer = (data) => {
 }
 export const asycAddCustomer = (formData, toggle, reset) => {
     return (dispatch) => {
-        axios.post('https://dct-billing-app.herokuapp.com/api/customers', formData, {
+        axios.post('/customers', formData, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -108,7 +108,7 @@ export const asyncEditCustomer = (formData, toggle, reset, id) => {
             .then((willSave) => {
                 if (willSave) {
                     //Start Asyc call if willSave is true
-                    axios.put(`https://dct-billing-app.herokuapp.com/api/customers/${id}`, formData, {
+                    axios.put(`/customers/${id}`, formData, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('token')}`
                         }
@@ -157,7 +157,7 @@ export const startDeleteCustomer = (id) => {
             .then((willDelete) => {
                 if (willDelete) {
                     // Start Async Call
-                    axios.delete(`https://dct-billing-app.herokuapp.com/api/customers/${id}`, {
+                    axios.delete(`/customers/${id}`, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('token')}`
                         }
